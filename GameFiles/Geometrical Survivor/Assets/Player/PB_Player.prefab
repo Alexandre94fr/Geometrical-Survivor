@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 748530318692756016}
+  - component: {fileID: 3489821892548458341}
   - component: {fileID: 3376845239460571597}
   m_Layer: 0
   m_Name: Inputs
@@ -63,6 +64,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7507465282688601360}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3489821892548458341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345292221126493853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467d925fcf64b9847a6f9f8fb62fd381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3376845239460571597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,13 +103,13 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 3489821892548458341}
+        m_TargetAssemblyTypeName: S_PlayerInputs, Assembly-CSharp
+        m_MethodName: OnMovementInput
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -106,13 +119,13 @@ MonoBehaviour:
     m_ActionName: Game/Movements[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 3489821892548458341}
+        m_TargetAssemblyTypeName: S_PlayerInputs, Assembly-CSharp
+        m_MethodName: OnActiveCapacityUseInput
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -122,13 +135,13 @@ MonoBehaviour:
     m_ActionName: Game/UseActiveCapacity[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 3489821892548458341}
+        m_TargetAssemblyTypeName: S_PlayerInputs, Assembly-CSharp
+        m_MethodName: OnPauseUnPauseInput
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
