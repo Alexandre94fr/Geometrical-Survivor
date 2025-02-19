@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "50b4d170-2fc3-47a6-834e-9b7e7485e514",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "UseActiveCapacity",
                     "type": "Button",
                     "id": "a9e165e7-b47c-49ca-bcee-4b1acb5ab98d",
@@ -90,59 +99,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector - Controller",
-                    "id": "a1921753-6a98-42ac-8f03-dd22d14347ab",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "81b5cd2e-7141-43d8-b514-5a5d209cd7a2",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Movements",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "65db3b50-258b-477b-b95c-24f583cd64bc",
-                    "path": "<Gamepad>/leftStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Movements",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "b1049e0c-6b77-40a7-8914-4655127fa76a",
-                    "path": "<Gamepad>/leftStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Movements",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "17e8274a-4288-4d2a-9390-746ac9fb4df7",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Movements",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "c733743c-e122-4c4a-802a-b9dcc02d384d",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Movements",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -196,6 +161,28 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Pause/UnPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "881294a7-201b-4cfd-8acd-174decb31add",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + Mouse",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea6fbeba-a030-4594-949c-4eb5130aeaf3",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
