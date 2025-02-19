@@ -7,8 +7,12 @@ public class S_PlayerInputsReciever : MonoBehaviour
     {
         if (p_callbackContext.performed)
         {
-            // TODO: Invoke S_Controller event nammed OnPlayerMoveEvent
-            // Use : p_callbackContext.ReadValue<Vector2>();
+            S_PlayerController._OnPlayerMoveInputEvent?.Invoke(p_callbackContext.ReadValue<Vector2>());
+        }
+
+        if (p_callbackContext.canceled)
+        {
+            S_PlayerController._OnPlayerMoveInputEvent?.Invoke(p_callbackContext.ReadValue<Vector2>());
         }
     }
 
