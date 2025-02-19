@@ -15,9 +15,9 @@ public class S_PlayerController : MonoBehaviour
 
     void Start()
     {
-        //if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
-        //    (_playerTransform, nameof(_playerTransform))
-        //)) return;
+        if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
+            (_playerTransform, nameof(_playerTransform))
+        )) return;
 
         _OnPlayerMoveInputEvent += UpdateMovementDirection;
     }
