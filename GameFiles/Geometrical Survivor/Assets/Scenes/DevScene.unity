@@ -495,10 +495,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PB_Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5104379994868066255, guid: a25eb43498169e04196458ee6c7d1745, type: 3}
-      propertyPath: _movementSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7507465282688601360, guid: a25eb43498169e04196458ee6c7d1745, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
