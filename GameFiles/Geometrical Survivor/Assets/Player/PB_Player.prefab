@@ -321,6 +321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7193266488691910972}
+  - component: {fileID: 632162221297134254}
   m_Layer: 0
   m_Name: Attributes
   m_TagString: Untagged
@@ -343,6 +344,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6784561711575869230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &632162221297134254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7662445884438956924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150be61264747c44c94644950a3416a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDebuggingKeysEnabled: 1
+  _playerStatistics: {fileID: 11400000, guid: 4a0c79081f69993498bd29d5436e30ed, type: 2}
+  _playerName: 
+  _movementSpeed: 0
+  _maxHealthPoints: 0
+  _healthPoints: 0
+  _nanomachinesNeededToLevelUp: 0
+  _collectedNanomachinesSinceLevelUp: 0
+  _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain: 0
+  _technologicalLevel: 0
+  _collectedNanomachines: 0
 --- !u!1 &7748163634826311131
 GameObject:
   m_ObjectHideFlags: 0
