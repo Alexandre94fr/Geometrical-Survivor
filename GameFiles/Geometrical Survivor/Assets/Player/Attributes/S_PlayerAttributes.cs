@@ -224,26 +224,26 @@ public class S_PlayerAttributes : MonoBehaviour
     #region -= Attributes - Private variables =-
 
     [Header(" Basic :")]
-    [SerializeField] string _playerName;
+    [ReadOnlyInInspector] [SerializeField] string _playerName;
 
     [Header(" Movement :")]
-    [SerializeField] int _movementSpeed;
+    [ReadOnlyInInspector] [SerializeField] int _movementSpeed;
 
     [Header(" Combat :")]
-    [SerializeField] int _maxHealthPoints;
-    [SerializeField] int _healthPoints;
+    [ReadOnlyInInspector] [SerializeField] int _maxHealthPoints;
+    [ReadOnlyInInspector] [SerializeField] int _healthPoints;
 
-    //  [SerializeField] S_ActiveCapacity _equippedActiveCapacity; 
-    //  [SerializeField] List<S_PassiveCapacity> _equippedPassiveCapacities;
+    // [ReadOnlyInInspector] [SerializeField] S_ActiveCapacity _equippedActiveCapacity; 
+    // [ReadOnlyInInspector] [SerializeField] List<S_PassiveCapacity> _equippedPassiveCapacities;
 
     [Header(" Experience :")]
-    [SerializeField] int _nanomachinesNeededToLevelUp;
-    [SerializeField] int _collectedNanomachinesSinceLevelUp;
-    [SerializeField] float _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain; // Not long at all
-    [SerializeField] int _technologicalLevel;
+    [ReadOnlyInInspector] [SerializeField] int _nanomachinesNeededToLevelUp;
+    [ReadOnlyInInspector] [SerializeField] int _collectedNanomachinesSinceLevelUp;
+    [ReadOnlyInInspector] [SerializeField] float _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain; // Not long at all
+    [ReadOnlyInInspector] [SerializeField] int _technologicalLevel;
 
     [Header(" Economy :")]
-    [SerializeField] int _collectedNanomachines;
+    [ReadOnlyInInspector] [SerializeField] int _collectedNanomachines;
     #endregion
 
     int _firstNanomachinesNeededToLevelUp;
