@@ -27,6 +27,34 @@ public static class S_VariablesChecker
 
         return false;
     }
+
+    public static bool IsNumberVariableUnderZeroCheck(string p_gameObjectName, (object variable, string variableName) p_variableToCheck)
+    {
+        if ((float)p_variableToCheck.variable < 0)
+        {
+            Debug.LogError(
+                $"ERROR ! The variable '{p_variableToCheck.variableName}' in '{p_gameObjectName}' GameObject is under zero."
+            );
+            return true;
+        }
+
+        return false;
+    }
+
+    public static bool IsNumberVariableEqualZeroCheck(string p_gameObjectName, (object variable, string variableName) p_variableToCheck)
+    {
+        if ((float)p_variableToCheck.variable == 0)
+        {
+            Debug.LogError(
+                $"ERROR ! The variable '{p_variableToCheck.variableName}' in '{p_gameObjectName}' GameObject equals zero."
+            );
+            return true;
+        }
+
+        return false;
+    }
+
+    // You can add more checks here.
     #endregion
 
     /// <summary>
