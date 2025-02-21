@@ -244,9 +244,11 @@ public class S_PlayerAttributes : MonoBehaviour
 
     [Header(" Economy :")]
     [ReadOnlyInInspector] [SerializeField] int _collectedNanomachines;
+
     #endregion
 
     int _firstNanomachinesNeededToLevelUp;
+
 
     void Start()
     {
