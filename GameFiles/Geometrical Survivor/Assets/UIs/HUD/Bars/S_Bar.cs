@@ -75,6 +75,8 @@ public class S_Bar : MonoBehaviour
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
             (_fileBarNumbers, nameof(_fileBarNumbers)),
 
+            (_barComponentValues._FileBarSprite, nameof(_barComponentValues._FileBarSprite)),
+
             (_fileBarImage, nameof(_fileBarImage)),
             (_fileBarBackgroundImage, nameof(_fileBarBackgroundImage)),
             (_backgroundImage, nameof(_backgroundImage)),

@@ -163,22 +163,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aea1633dd95d9f4eb1bc38ea80bec8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _backgroundImage: {fileID: 3033292940252801833}
-  _fileBarBackgroundImage: {fileID: 3321401469372258539}
-  _fileBarImage: {fileID: 6253731266286605247}
-  _barIconBackgroundImage: {fileID: 8427336673111203730}
-  _barIconImage: {fileID: 6832791391708791000}
   _fileBarNumbers: {fileID: 1687658848258450395}
+  _fileBarImage: {fileID: 6253731266286605247}
+  _fileBarBackgroundImage: {fileID: 3321401469372258539}
+  _backgroundImage: {fileID: 3033292940252801833}
+  _barIconImage: {fileID: 6832791391708791000}
+  _barIconBackgroundImage: {fileID: 8427336673111203730}
   _barType: 0
   _barComponentValues:
-    _BackgroundColor: {r: 0.65, g: 0.65, b: 0.65, a: 1}
-    _FileBarBackgroundColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
     _FileBarColor: {r: 0.85, g: 0.85, b: 0.85, a: 1}
+    _FileBarBackgroundColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
+    _BackgroundColor: {r: 0.65, g: 0.65, b: 0.65, a: 1}
     _BarIconSprite: {fileID: 0}
     _BackgroundBarIconSprite: {fileID: 0}
-    _BackgroundSprite: {fileID: 0}
+    _FileBarSprite: {fileID: 21300000, guid: dc2e8a07e143634489f2d04d940733bb, type: 3}
     _FileBarBackgroundSprite: {fileID: 0}
-    _FileBarSprite: {fileID: 0}
+    _BackgroundSprite: {fileID: 0}
 --- !u!1 &5707362221268479456
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: dc2e8a07e143634489f2d04d940733bb, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

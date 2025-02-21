@@ -13,6 +13,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 8806c5ac0009cb24daf1907480d5d648, type: 3}
     - target: {fileID: 2749036783958448204, guid: 665084055c01ce848bf4129155b1f767, type: 3}
+      propertyPath: _barComponentValues._FileBarSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dc2e8a07e143634489f2d04d940733bb, type: 3}
+    - target: {fileID: 2749036783958448204, guid: 665084055c01ce848bf4129155b1f767, type: 3}
       propertyPath: _barComponentValues._FileBarColor.b
       value: 0.1837451
       objectReference: {fileID: 0}
@@ -28,6 +32,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PB_HealthBar Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6253731266286605247, guid: 665084055c01ce848bf4129155b1f767, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dc2e8a07e143634489f2d04d940733bb, type: 3}
     - target: {fileID: 6253731266286605247, guid: 665084055c01ce848bf4129155b1f767, type: 3}
       propertyPath: m_Color.b
       value: 0.1837451

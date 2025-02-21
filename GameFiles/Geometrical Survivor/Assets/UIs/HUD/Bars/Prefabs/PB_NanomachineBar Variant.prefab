@@ -29,6 +29,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 7e03437b04af4224a9e1024983fb7497, type: 3}
     - target: {fileID: 2749036783958448204, guid: 665084055c01ce848bf4129155b1f767, type: 3}
+      propertyPath: _barComponentValues._FileBarSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dc2e8a07e143634489f2d04d940733bb, type: 3}
+    - target: {fileID: 2749036783958448204, guid: 665084055c01ce848bf4129155b1f767, type: 3}
       propertyPath: _barComponentValues._FileBarColor.b
       value: 0.28953207
       objectReference: {fileID: 0}
@@ -44,6 +48,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PB_NanomachineBar Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6253731266286605247, guid: 665084055c01ce848bf4129155b1f767, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dc2e8a07e143634489f2d04d940733bb, type: 3}
     - target: {fileID: 6253731266286605247, guid: 665084055c01ce848bf4129155b1f767, type: 3}
       propertyPath: m_Color.b
       value: 0.28953207
