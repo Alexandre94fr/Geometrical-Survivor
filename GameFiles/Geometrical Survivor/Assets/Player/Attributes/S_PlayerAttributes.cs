@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class S_PlayerAttributes : MonoBehaviour
 {
@@ -62,7 +63,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
             _maxHealthPoints = value;
 
-            // TODO : Launch event update HUD
+            // Launch HUD update
+            S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Health, _HealthPoints, _maxHealthPoints);
         }
     }
 
@@ -84,7 +86,8 @@ public class S_PlayerAttributes : MonoBehaviour
             if (_healthPoints > _MaxHealthPoints)
                 _healthPoints = _MaxHealthPoints;
 
-            // TODO : Launch event update HUD (Health)
+            // Launch HUD update
+            S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Health, _healthPoints, _MaxHealthPoints);
         }
     }
     #endregion
@@ -115,7 +118,8 @@ public class S_PlayerAttributes : MonoBehaviour
                 _nanomachinesNeededToLevelUp = 0;
             }
 
-            // TODO : Launch event update HUD (_NanomachinesNeededToLevelUp)
+            // Launch HUD update
+            S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Nanomachine, _CollectedNanomachinesSinceLevelUp, _nanomachinesNeededToLevelUp);
         }
     }
 
@@ -148,7 +152,8 @@ public class S_PlayerAttributes : MonoBehaviour
                 // TODO : Launch event open Upgrader menu
             }
 
-            // TODO : Launch event update HUD (_CollectedNanomachinesSinceLevelUp)
+            // Launch HUD update
+            S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Nanomachine, _collectedNanomachinesSinceLevelUp, _NanomachinesNeededToLevelUp);
         }
     }
 
