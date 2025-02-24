@@ -13,8 +13,7 @@ public class S_PlayerStatistics : ScriptableObject
     [Header(" Combat :")]
     public int _MaxHealthPoints = 100;
 
-    // TODO : Equipped active capacity
-    //public S_ActiveCapacity _EquippedActiveCapacity; 
+    public S_ActiveCapacityAttributes _EquippedActiveCapacity; 
 
     // TODO : Equipped passive capacity
     //public List<S_PassiveCapacity> _EquippedPassiveCapacities;

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class S_PlayerAttributes : MonoBehaviour
 {
@@ -94,8 +93,20 @@ public class S_PlayerAttributes : MonoBehaviour
 
     #region Capacities
 
-    // TODO : Equipped active capacity
-    //public S_ActiveCapacity _EquippedActiveCapacity; 
+    public S_ActiveCapacityAttributes _EquippedActiveCapacity
+    {
+        get { return _equippedActiveCapacity; }
+        set
+        {
+            if (value == null)
+            {
+                Debug.LogError($"ERROR ! Someone tryied to set '{nameof(_EquippedActiveCapacity)}' to 'null'. That should not append.");
+                return;
+            }
+
+            _equippedActiveCapacity = value;
+        }
+    }
 
     // TODO : Equipped passive capacity
     //public List<S_PassiveCapacity> _EquippedPassiveCapacities;
@@ -238,7 +249,8 @@ public class S_PlayerAttributes : MonoBehaviour
     [ReadOnlyInInspector] [SerializeField] int _maxHealthPoints;
     [ReadOnlyInInspector] [SerializeField] int _healthPoints;
 
-    // [ReadOnlyInInspector] [SerializeField] S_ActiveCapacity _equippedActiveCapacity; 
+    [Space]
+    [ReadOnlyInInspector] [SerializeField] S_ActiveCapacityAttributes _equippedActiveCapacity;
     // [ReadOnlyInInspector] [SerializeField] List<S_PassiveCapacity> _equippedPassiveCapacities;
 
     [Header(" Experience :")]
@@ -253,7 +265,6 @@ public class S_PlayerAttributes : MonoBehaviour
     #endregion
 
     int _firstNanomachinesNeededToLevelUp;
-
 
     void Start()
     {
@@ -277,7 +288,7 @@ public class S_PlayerAttributes : MonoBehaviour
         _HealthPoints = _MaxHealthPoints;
 
         // TODO : When created, un-comment
-        // _EquippedActiveCapacity = p_playerStatistics._EquippedActiveCapacity;
+        _EquippedActiveCapacity = p_playerStatistics._EquippedActiveCapacity;
         // _EquippedPassiveCapacities = p_playerStatistics._EquippedPassiveCapacities;
 
         // Experience

@@ -5,27 +5,39 @@ public class S_PlayerController : MonoBehaviour
 {
     public static Action<Vector2> _OnPlayerMoveInputEvent;
     public static Action<Vector2> _OnPlayerRotateEvent;
+    public static Action _OnActiveCapacityUseEvent;
 
     [Header(" External references :")]
-    [SerializeField] Transform _playerCameraTransform;
     [SerializeField] Transform _playerTransform;
-    //[SerializeField] S_PlayerProperties _playerProperties;
+    [SerializeField] Transform _playerCameraTransform;
 
-    // TEMP: Will be replaced by _playerProperties
-    [Header(" TEMP :")]
-    [SerializeField] float _movementSpeed = 5.0f;
-    
+    [Space]
+    [SerializeField] S_ActiveCapacityLauncher _playerActiveCapacityLauncher;
+
+    [Space]
+    [SerializeField] S_PlayerStatistics _playerStatistics;
+    [SerializeField] S_PlayerAttributes _playerAttributes;
+
+    int _movementSpeed;
     Vector2 _movementDirection;
 
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
             (_playerTransform, nameof(_playerTransform)),
-            (_playerCameraTransform, nameof(_playerCameraTransform))
+            (_playerCameraTransform, nameof(_playerCameraTransform)),
+
+            (_playerActiveCapacityLauncher, nameof(_playerActiveCapacityLauncher)),
+
+            (_playerStatistics, nameof(_playerStatistics)),
+            (_playerAttributes, nameof(_playerAttributes))
         )) return;
+
+        _movementSpeed = _playerStatistics._MovementSpeed;
 
         _OnPlayerMoveInputEvent += UpdateMovementDirection;
         _OnPlayerRotateEvent += UpdatePlayerOrientation;
+        _OnActiveCapacityUseEvent += TryLaunchActiveCapacity;
     }
 
     void Update()
@@ -46,5 +58,10 @@ public class S_PlayerController : MonoBehaviour
         float rotationAngle = Mathf.Atan2(p_newOrientation.y, p_newOrientation.x) * Mathf.Rad2Deg;
 
         _playerTransform.rotation = Quaternion.Euler(0, 0, rotationAngle - 90);
+    }
+
+    void TryLaunchActiveCapacity()
+    {
+        _playerActiveCapacityLauncher.TryLaunchActiveCapacity(_playerAttributes._EquippedActiveCapacity._ActiveCapacityAttributes);
     }
 }
