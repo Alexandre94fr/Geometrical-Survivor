@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO : Si possible essayer de faire que cette class soit unique, ou même encore mieux static
-
 public class S_ActiveCapacityLauncher : MonoBehaviour
 {
     [Header(" External references")]
     [SerializeField] Transform _launcherTransform;
-
-    [SerializeField] Transform _projectileParent;
 
 
     bool _canLaunchActiveCapacity = true;
@@ -74,7 +70,7 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
             p_activeCapacityStruct._ProjectilePrefab,
             _launcherTransform.position,
             projectileRotation,
-            _projectileParent
+            transform
         );
 
         return projectile;
