@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
 {
     Transform _transform;
@@ -24,6 +23,22 @@ public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
         Vector3 positionOffset = _movementSpeed * Time.deltaTime * _transform.up;
 
         _transform.position += positionOffset;
+    }
+
+    void OnTriggerEnter2D(Collider2D p_collision2D)
+    {
+        Transform colliderTransform = p_collision2D.transform;
+
+        if (colliderTransform.CompareTag("Enemy"))
+        {
+            // TODO : Deal damage to the enemy
+
+            SelfDestroy();
+        }
+        else if (colliderTransform.CompareTag("Obstacle"))
+        {
+            SelfDestroy();
+        }
     }
 
     public void LaunchProjectile(float p_projectileLifetime, float p_projectileRange)
@@ -48,6 +63,11 @@ public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
     {
         yield return new WaitForSeconds(p_lifetime);
 
+        SelfDestroy();
+    }
+
+    void SelfDestroy()
+    {
         _isProjectileLaunched = false;
 
         Destroy(gameObject);
