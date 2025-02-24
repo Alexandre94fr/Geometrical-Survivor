@@ -289,7 +289,9 @@ public class S_PlayerAttributes : MonoBehaviour
 
         // Economy
         _CollectedNanomachines = p_playerStatistics._CollectedNanomachines;
-        // Will also update '_CollectedNanomachinesSinceLevelUp' automaticly and '_TechnologicalLevel' when there is the need to level up
+
+        // NOTE : In order to update the possible UIs linked to the _CollectedNanomachinesSinceLevelUp variable, we call it
+        _CollectedNanomachinesSinceLevelUp += 0;
     }
 
     /// <summary>
