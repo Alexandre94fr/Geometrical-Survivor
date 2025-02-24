@@ -17,14 +17,14 @@ MonoBehaviour:
     _NanomachineCostPerUse: 5
     _Name: Nanomachine projection
     _ArmingTime: 0
-    _AttackTimeLenght: 2
+    _AttackLifetime: 1
     _AttackKnockback: 0.1
     _AttackStunningTime: 0.1
     _SelfStunningTime: 0
     _CooldownTime: 0.75
     _AttackDamage: 5
     _AttackSpeed: 0
-    _AttackReach: 10
+    _AttackReach: 20
     _AttackDirection: {x: 0, y: 1}
     _DoesInstantiateProjectile: 1
     _ProjectilePrefab: {fileID: 9204182753928884582, guid: 60415fcdbb6725743b2ffbbf75f04f3a, type: 3}

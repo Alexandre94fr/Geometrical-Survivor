@@ -17,14 +17,14 @@ MonoBehaviour:
     _NanomachineCostPerUse: 7
     _Name: Nanomachine triangle form projection
     _ArmingTime: 0
-    _AttackTimeLenght: 2
+    _AttackLifetime: 1
     _AttackKnockback: 0.2
     _AttackStunningTime: 0.25
     _SelfStunningTime: 0
     _CooldownTime: 0.75
     _AttackDamage: 10
     _AttackSpeed: 0
-    _AttackReach: 10
+    _AttackReach: 25
     _AttackDirection: {x: 0, y: 1}
     _DoesInstantiateProjectile: 1
     _ProjectilePrefab: {fileID: 0}

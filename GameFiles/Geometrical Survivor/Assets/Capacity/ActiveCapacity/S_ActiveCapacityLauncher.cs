@@ -28,7 +28,9 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
 
         if (p_activeCapacityStruct._DoesInstantiateProjectile)
         {
-            InstantiateProjectile(ref p_activeCapacityStruct);
+            GameObject projectile = InstantiateProjectile(ref p_activeCapacityStruct);
+
+            projectile.GetComponent<S_IProjectile>().LaunchProjectile(p_activeCapacityStruct._AttackLifetime, p_activeCapacityStruct._AttackReach);
         }
         else
         {

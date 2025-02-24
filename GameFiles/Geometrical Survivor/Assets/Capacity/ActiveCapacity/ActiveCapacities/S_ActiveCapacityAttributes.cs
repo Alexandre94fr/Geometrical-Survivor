@@ -16,7 +16,7 @@ public class S_ActiveCapacityAttributes : ScriptableObject
 
         [Space]
         public float _ArmingTime;
-        public float _AttackTimeLenght;
+        public float _AttackLifetime;
         public float _AttackKnockback;
 
         [Space]
