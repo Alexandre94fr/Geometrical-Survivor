@@ -59,7 +59,7 @@ public class S_Bar : MonoBehaviour
         new(0.85f, 0.85f, 0.85f, 1)
     );
 
-    void Start()
+    void Awake()
     {
         S_BarHandler._OnBarValueUpdateEvent += UpdateBar;
     }
