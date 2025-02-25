@@ -1071,10 +1071,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PB_Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4002209417761333995, guid: 607f2822a4f3a1947bca76665008d7a4, type: 3}
-      propertyPath: orthographic size
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5277135227647054822, guid: 607f2822a4f3a1947bca76665008d7a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
