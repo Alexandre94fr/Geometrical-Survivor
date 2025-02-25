@@ -21,7 +21,7 @@ MonoBehaviour:
     _AttackKnockback: 0.1
     _AttackStunningTime: 0.1
     _SelfStunningTime: 0
-    _CooldownTime: 0.75
+    _CooldownTime: 0.25
     _AttackDamage: 5
     _AttackSpeed: 0
     _AttackReach: 20

@@ -181,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4494620329277046174}
   - component: {fileID: 637135819593500881}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 7239518446677855532}
   - component: {fileID: 1605346596671682149}
   - component: {fileID: 4048391947647175490}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Inputs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7193266488691910972}
   - component: {fileID: 4249878313565248079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attributes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 7235201299393375556}
   - component: {fileID: 3120105883733247090}
   - component: {fileID: 4864666295207276200}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

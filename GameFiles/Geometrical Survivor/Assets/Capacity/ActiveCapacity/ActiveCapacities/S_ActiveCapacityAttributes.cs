@@ -26,7 +26,7 @@ public class S_ActiveCapacityAttributes : ScriptableObject
 
 
         [Header(" Attack :")]
-        public float _AttackDamage;
+        public int _AttackDamage;
         [Tooltip("Correspond for example to the attack's animation speed for a classic attack. On the other hand, the variable is NOT used for a projectile attack.")]
         public float _AttackSpeed;
         [Tooltip("Correspond for classic attacks, to the reach of damage of the attack. On the other hand, for projectile attacks it correspond to the distance the projectile will do before disappearing.")]

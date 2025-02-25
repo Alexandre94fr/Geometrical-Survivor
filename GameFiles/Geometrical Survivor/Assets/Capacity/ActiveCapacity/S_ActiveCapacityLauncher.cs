@@ -7,6 +7,8 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
     [Header(" External references")]
     [SerializeField] Transform _launcherTransform;
 
+    [Header(" Properties :")]
+    S_DefaultProjectile.ProjectileOwnerEnum _projectileOwner;
 
     bool _canLaunchActiveCapacity = true;
 
@@ -30,7 +32,12 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
         {
             GameObject projectile = InstantiateProjectile(ref p_activeCapacityStruct);
 
-            projectile.GetComponent<S_IProjectile>().LaunchProjectile(p_activeCapacityStruct._AttackLifetime, p_activeCapacityStruct._AttackReach);
+            projectile.GetComponent<S_IProjectile>().LaunchProjectile(
+                _projectileOwner,
+                p_activeCapacityStruct._AttackLifetime,
+                p_activeCapacityStruct._AttackReach,
+                p_activeCapacityStruct._AttackDamage
+            );
         }
         else
         {
