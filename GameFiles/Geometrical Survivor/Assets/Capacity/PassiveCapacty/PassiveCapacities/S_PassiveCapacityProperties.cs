@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,14 +15,21 @@ public class S_PassiveCapacityProperties : ScriptableObject
         public int _Price;
 
         [Header(" Upgrades :")]
-        public int _UpgradableNumber;
-        public float _UpgradeBoostDefaultFactor;
+        [Tooltip("Use that value as a getter, you can use '_PassiveCapacityProperties._UpgradesPerLevels.Count' to get the same result.")]
+        [ReadOnlyInInspector] public int _UpgradableNumber;
 
         [Header(" Boosts :")]
-        public float _MovementSpeed;
-        public float _NanomachineCollectionReach;
+        public List<GamePropertiesStruct> _UpgradesPerLevels;
+    }
 
-        [Space]
+    [Serializable]
+    public struct GamePropertiesStruct
+    {
+        [Header(" Character properties :")]
+        public float _MovementSpeed;
+        public float _NanomachineCollectionRadius;
+
+        [Header(" Capacity properties :")]
         public float _Damage;
         public float _AttackReach;
         public float _ArmingTime;
@@ -34,10 +40,15 @@ public class S_PassiveCapacityProperties : ScriptableObject
         public float _AttackLifetime;
 
         [Space]
-        public float _StunningTime; 
+        public float _StunningTime;
         public float _SelfStunningTimeWhenSucceed;
         public float _SelfStunningTimeWhenFailed;
     }
 
     public PassiveCapacityPropertiesStruct _PassiveCapacityProperties;
+
+    void OnValidate()
+    {
+        _PassiveCapacityProperties._UpgradableNumber = _PassiveCapacityProperties._UpgradesPerLevels.Count;
+    }
 }
