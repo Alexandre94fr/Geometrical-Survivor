@@ -19,7 +19,7 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
         )) return;
     }
 
-    public void TryLaunchActiveCapacity(S_ActiveCapacityAttributes.ActiveCapacityStruct p_activeCapacityStruct)
+    public void TryLaunchActiveCapacity(S_ActiveCapacityProperties.ActiveCapacityStruct p_activeCapacityStruct)
     {
         if (!_canLaunchActiveCapacity)
             return;
@@ -54,12 +54,12 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
         _canLaunchActiveCapacity = true;
     }
 
-    void ModifyActiveCapacityAttributes(ref S_ActiveCapacityAttributes.ActiveCapacityStruct p_activeCapacityStruct)
+    void ModifyActiveCapacityAttributes(ref S_ActiveCapacityProperties.ActiveCapacityStruct p_activeCapacityStruct)
     {
         // TODO : Change active capacity struct values based on passive capacities
     }
 
-    GameObject InstantiateProjectile(ref S_ActiveCapacityAttributes.ActiveCapacityStruct p_activeCapacityStruct)
+    GameObject InstantiateProjectile(ref S_ActiveCapacityProperties.ActiveCapacityStruct p_activeCapacityStruct)
     {
         if (p_activeCapacityStruct._ProjectilePrefab == null)
         {

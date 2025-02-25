@@ -9,22 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d17b45c7a32f5d4ca3cb47504066e87, type: 3}
-  m_Name: SO_NanomachineProjectionAttributes
+  m_Script: {fileID: 11500000, guid: cd297a1f956aa9144949c9074bb2fb02, type: 3}
+  m_Name: SO_NanomachineTriangleFormProjectionProperties
   m_EditorClassIdentifier: 
-  _ActiveCapacityAttributes:
-    _Price: 50
+  _ActiveCapacityProperties:
+    _Price: 100
     _NanomachineCostPerUse: 5
-    _Name: Nanomachine projection
+    _Name: Nanomachine triangle form projection
     _ArmingTime: 0
     _AttackLifetime: 1
-    _AttackKnockback: 0.1
-    _AttackStunningTime: 0.1
+    _AttackKnockback: 0.2
+    _AttackStunningTime: 0.25
     _SelfStunningTime: 0
-    _CooldownTime: 0.25
-    _AttackDamage: 5
+    _CooldownTime: 0.75
+    _AttackDamage: 20
     _AttackSpeed: 0
-    _AttackReach: 20
+    _AttackReach: 40
     _AttackDirection: {x: 0, y: 1}
     _DoesInstantiateProjectile: 1
     _ProjectilePrefab: {fileID: 9204182753928884582, guid: 60415fcdbb6725743b2ffbbf75f04f3a, type: 3}

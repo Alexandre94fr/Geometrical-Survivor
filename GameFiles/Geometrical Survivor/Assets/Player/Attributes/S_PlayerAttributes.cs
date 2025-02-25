@@ -93,7 +93,7 @@ public class S_PlayerAttributes : MonoBehaviour
 
     #region Capacities
 
-    public S_ActiveCapacityAttributes _EquippedActiveCapacity
+    public S_ActiveCapacityProperties _EquippedActiveCapacity
     {
         get { return _equippedActiveCapacity; }
         set
@@ -234,7 +234,7 @@ public class S_PlayerAttributes : MonoBehaviour
     [SerializeField] bool _isDebuggingKeysEnabled;
 
     [Header(" Player's statistics :")]
-    [SerializeField] S_PlayerStatistics _playerStatistics;
+    [SerializeField] S_PlayerProperties _playerStatistics;
     [Space]
 
     #region -= Attributes - Private variables =-
@@ -250,7 +250,7 @@ public class S_PlayerAttributes : MonoBehaviour
     [ReadOnlyInInspector] [SerializeField] int _healthPoints;
 
     [Space]
-    [ReadOnlyInInspector] [SerializeField] S_ActiveCapacityAttributes _equippedActiveCapacity;
+    [ReadOnlyInInspector] [SerializeField] S_ActiveCapacityProperties _equippedActiveCapacity;
     // [ReadOnlyInInspector] [SerializeField] List<S_PassiveCapacity> _equippedPassiveCapacities;
 
     [Header(" Experience :")]
@@ -275,7 +275,7 @@ public class S_PlayerAttributes : MonoBehaviour
         InitializingPlayerAttributes(_playerStatistics);
     }
 
-    void InitializingPlayerAttributes(S_PlayerStatistics p_playerStatistics)
+    void InitializingPlayerAttributes(S_PlayerProperties p_playerStatistics)
     {
         // Basic
         _PlayerName = p_playerStatistics._PlayerName;

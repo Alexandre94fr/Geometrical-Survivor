@@ -15,7 +15,7 @@ public class S_PlayerController : MonoBehaviour
     [SerializeField] S_ActiveCapacityLauncher _playerActiveCapacityLauncher;
 
     [Space]
-    [SerializeField] S_PlayerStatistics _playerStatistics;
+    [SerializeField] S_PlayerProperties _playerStatistics;
     [SerializeField] S_PlayerAttributes _playerAttributes;
 
     int _movementSpeed;
@@ -62,6 +62,6 @@ public class S_PlayerController : MonoBehaviour
 
     void TryLaunchActiveCapacity()
     {
-        _playerActiveCapacityLauncher.TryLaunchActiveCapacity(_playerAttributes._EquippedActiveCapacity._ActiveCapacityAttributes);
+        _playerActiveCapacityLauncher.TryLaunchActiveCapacity(_playerAttributes._EquippedActiveCapacity._ActiveCapacityProperties);
     }
 }

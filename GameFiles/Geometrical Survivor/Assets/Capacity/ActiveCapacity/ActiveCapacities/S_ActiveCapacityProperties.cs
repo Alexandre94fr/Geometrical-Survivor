@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SO_ActiveCapactityAttributes", menuName = "ScripableObject/ActiveCapactityAttributes")]
-public class S_ActiveCapacityAttributes : ScriptableObject
+[CreateAssetMenu(fileName = "SO_ActiveCapactityProperties", menuName = "ScriptableObject/ActiveCapactityProperties")]
+public class S_ActiveCapacityProperties : ScriptableObject
 {
     [Serializable]
     public struct ActiveCapacityStruct
@@ -39,5 +39,5 @@ public class S_ActiveCapacityAttributes : ScriptableObject
         public GameObject _ProjectilePrefab;
     }
 
-    public ActiveCapacityStruct _ActiveCapacityAttributes;
+    public ActiveCapacityStruct _ActiveCapacityProperties;
 }

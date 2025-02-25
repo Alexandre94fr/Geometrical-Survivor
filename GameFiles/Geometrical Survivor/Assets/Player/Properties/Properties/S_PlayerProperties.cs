@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SO_PlayerStatistics", menuName = "ScripableObject/PlayerStatistics")]
-public class S_PlayerStatistics : ScriptableObject
+[CreateAssetMenu(fileName = "SO_PlayerProperties", menuName = "ScriptableObject/PlayerProperties")]
+public class S_PlayerProperties : ScriptableObject
 {
     [Header(" Basic :")]
     public string _PlayerName = "Player";
@@ -13,7 +13,7 @@ public class S_PlayerStatistics : ScriptableObject
     [Header(" Combat :")]
     public int _MaxHealthPoints = 100;
 
-    public S_ActiveCapacityAttributes _EquippedActiveCapacity; 
+    public S_ActiveCapacityProperties _EquippedActiveCapacity; 
 
     // TODO : Equipped passive capacity
     //public List<S_PassiveCapacity> _EquippedPassiveCapacities;
