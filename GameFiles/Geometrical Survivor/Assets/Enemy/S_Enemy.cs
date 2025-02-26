@@ -19,6 +19,7 @@ public class S_Enemy : MonoBehaviour
         )) return;
 
         S_EnemyAttributes._OnEnemySpriteUpdateEvent += UpdateSprite;
+        S_EnemyAttributes._OnHealthPointsUpdateEvent += OnHealthUpdate;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -34,5 +35,19 @@ public class S_Enemy : MonoBehaviour
             return;
 
         _spriteRenderer.sprite = p_newSprite;
+    }
+
+    void OnHealthUpdate(S_Enemy p_enemy, int p_healthPoint)
+    {
+        if (p_enemy != this)
+            return;
+
+        if (p_healthPoint <= 0)
+            OnDeath();
+    }
+
+    void OnDeath()
+    {
+        Destroy(gameObject.transform.parent.gameObject);
     }
 }

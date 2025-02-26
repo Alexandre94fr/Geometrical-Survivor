@@ -39,7 +39,7 @@ public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
 
         if (_projectileOwner == ProjectileOwnerEnum.Player && colliderTransform.CompareTag("Enemy"))
         {
-            // TODO : Deal damage to the enemy
+            colliderTransform.GetComponentInChildren<S_EnemyAttributes>()._HealthPoints -= _projectileDamage;
 
             SelfDestroy();
         }
