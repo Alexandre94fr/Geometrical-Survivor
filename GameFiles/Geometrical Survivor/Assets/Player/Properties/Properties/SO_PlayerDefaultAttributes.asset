@@ -17,7 +17,7 @@ MonoBehaviour:
   _MaxHealthPoints: 100
   _EquippedActiveCapacity: {fileID: 11400000, guid: add2d4933dc4eca49b077aa4b4ba8bd3, type: 2}
   _EquippedPassiveCapacities:
-  - {fileID: 11400000, guid: 944ccb787a58ee840aebb38fbbe6e9d2, type: 2}
+  - {fileID: 11400000, guid: 5885fd34134ae344bbf23aa6082ea760, type: 2}
   _NanomachinesNeededToLevelUp: 25
   _NanomachinesNeededToLevelUpGrowthFactorPerLevelGain: 1.1
   _TechnologicalLevel: 1

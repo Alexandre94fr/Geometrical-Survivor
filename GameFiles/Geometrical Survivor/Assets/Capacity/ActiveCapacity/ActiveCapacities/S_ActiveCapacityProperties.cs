@@ -16,13 +16,15 @@ public class S_ActiveCapacityProperties : ScriptableObject
 
         [Space]
         public float _ArmingTime;
+        public int _InvulnerabilityTime;
         public float _AttackLifetime;
-        public float _AttackKnockback;
+        public float _CooldownTime;
 
         [Space]
         public float _AttackStunningTime;
-        public float _SelfStunningTime;
-        public float _CooldownTime;
+        public float _AttackKnockback;
+        public float _SelfStunningTimeWhenSucceed;
+        public float _SelfStunningTimeWhenFailed;
 
 
         [Header(" Attack :")]

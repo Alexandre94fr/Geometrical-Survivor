@@ -41,7 +41,7 @@ public class S_PassiveCapacityProperties : ScriptableObject
         public int _Damage;
         public int _AttackReach;
         public int _ArmingTime;
-        public int _CooldownTime;
+        public float _CooldownTime;
 
         [Space]
         public int _InvulnerabilityTime;
@@ -49,6 +49,7 @@ public class S_PassiveCapacityProperties : ScriptableObject
 
         [Space]
         public int _StunningTime;
+        public float _AttackKnockback;
         public int _SelfStunningTimeWhenSucceed;
         public int _SelfStunningTimeWhenFailed;
     }

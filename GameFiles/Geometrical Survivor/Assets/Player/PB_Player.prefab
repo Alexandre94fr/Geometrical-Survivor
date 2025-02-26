@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _launcherTransform: {fileID: 6784561711575869230}
+  _playerAttributes: {fileID: 4249878313565248079}
 --- !u!1 &6105828292127325584
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +405,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 150be61264747c44c94644950a3416a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _SumPassiveCapacityProperties:
+    _MovementSpeed: 0
+    _MaxHealthPoints: 0
+    _NanomachineCollectionRadius: 0
+    _Damage: 0
+    _AttackReach: 0
+    _ArmingTime: 0
+    _CooldownTime: 0
+    _InvulnerabilityTime: 0
+    _AttackLifetime: 0
+    _StunningTime: 0
+    _AttackKnockback: 0
+    _SelfStunningTimeWhenSucceed: 0
+    _SelfStunningTimeWhenFailed: 0
   _isDebuggingKeysEnabled: 1
   _playerStatistics: {fileID: 11400000, guid: 4a0c79081f69993498bd29d5436e30ed, type: 2}
   _playerName: 
