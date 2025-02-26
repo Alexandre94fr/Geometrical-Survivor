@@ -13,10 +13,9 @@ public class S_PlayerProperties : ScriptableObject
     [Header(" Combat :")]
     public int _MaxHealthPoints = 100;
 
+    [Space]
     public S_ActiveCapacityProperties _EquippedActiveCapacity; 
-
-    // TODO : Equipped passive capacity
-    //public List<S_PassiveCapacity> _EquippedPassiveCapacities;
+    public List<S_PassiveCapacityProperties> _EquippedPassiveCapacities;
 
     [Header(" Experience :")]
     public int _NanomachinesNeededToLevelUp = 25;
@@ -25,4 +24,5 @@ public class S_PlayerProperties : ScriptableObject
 
     [Header(" Economy :")]
     public int _CollectedNanomachines = 0;
+    public int _NanomachineCollectionRadius = 1;
 }

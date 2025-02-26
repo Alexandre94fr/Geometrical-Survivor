@@ -35,6 +35,8 @@ public class S_PlayerController : MonoBehaviour
 
         _movementSpeed = _playerStatistics._MovementSpeed;
 
+        S_PlayerAttributes._OnMovementSpeedUpdateEvent += UpdateMovementSpeed;
+
         _OnPlayerMoveInputEvent += UpdateMovementDirection;
         _OnPlayerRotateEvent += UpdatePlayerOrientation;
         _OnActiveCapacityUseEvent += TryLaunchActiveCapacity;
@@ -46,6 +48,11 @@ public class S_PlayerController : MonoBehaviour
 
         _playerTransform.position += positionOffset;
         _playerCameraTransform.position = new(_playerTransform.position.x, _playerTransform.position.y, -10);
+    }
+
+    void UpdateMovementSpeed(int p_newMovementSpeed)
+    {
+        _movementSpeed = p_newMovementSpeed;
     }
 
     void UpdateMovementDirection(Vector2 p_newDirection)

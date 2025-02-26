@@ -16,7 +16,9 @@ public class S_PassiveCapacityProperties : ScriptableObject
 
         [Header(" Upgrades :")]
         [Tooltip("Use that value as a getter, you can use '_PassiveCapacityProperties._UpgradesPerLevels.Count' to get the same result.")]
-        [ReadOnlyInInspector] public int _UpgradableNumber;
+        [ReadOnlyInInspector] public int _MaxLevel;
+        [Tooltip("You can use this variable to know the current level of this passive capacity")]
+        [ReadOnlyInInspector] public int _CurrentLevel;
 
         [Header(" Boosts :")]
         public List<GamePropertiesStruct> _UpgradesPerLevels;
@@ -26,29 +28,42 @@ public class S_PassiveCapacityProperties : ScriptableObject
     public struct GamePropertiesStruct
     {
         [Header(" Character properties :")]
-        public float _MovementSpeed;
-        public float _NanomachineCollectionRadius;
+        public int _MovementSpeed;
+
+        [Space]
+        public int _MaxHealthPoints;
+
+        [Space]
+        public int _NanomachineCollectionRadius;
+
 
         [Header(" Capacity properties :")]
-        public float _Damage;
-        public float _AttackReach;
-        public float _ArmingTime;
-        public float _CooldownTime;
+        public int _Damage;
+        public int _AttackReach;
+        public int _ArmingTime;
+        public int _CooldownTime;
 
         [Space]
-        public float _InvulnerabilityTime;
-        public float _AttackLifetime;
+        public int _InvulnerabilityTime;
+        public int _AttackLifetime;
 
         [Space]
-        public float _StunningTime;
-        public float _SelfStunningTimeWhenSucceed;
-        public float _SelfStunningTimeWhenFailed;
+        public int _StunningTime;
+        public int _SelfStunningTimeWhenSucceed;
+        public int _SelfStunningTimeWhenFailed;
     }
 
     public PassiveCapacityPropertiesStruct _PassiveCapacityProperties;
 
+#if UNITY_EDITOR
+
     void OnValidate()
     {
-        _PassiveCapacityProperties._UpgradableNumber = _PassiveCapacityProperties._UpgradesPerLevels.Count;
+        _PassiveCapacityProperties._MaxLevel = _PassiveCapacityProperties._UpgradesPerLevels.Count;
+
+        // NOTE : It's here to bypass the fact that we can't set a value insind a struct, due to this version of C# (9), should be 10
+        if (_PassiveCapacityProperties._CurrentLevel == 0)
+            _PassiveCapacityProperties._CurrentLevel = 1;
     }
+#endif
 }

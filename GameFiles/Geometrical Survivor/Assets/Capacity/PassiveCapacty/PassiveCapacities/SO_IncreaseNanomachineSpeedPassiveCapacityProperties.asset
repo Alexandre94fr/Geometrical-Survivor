@@ -16,9 +16,11 @@ MonoBehaviour:
     _Name: Increase nanomachine speed
     _Price: 35
     _UpgradableNumber: 5
+    _CurrentLevel: 1
     _UpgradesPerLevels:
-    - _MovementSpeed: 1
-      _NanomachineCollectionRadius: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 1
+      _MaxHealthPoints: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -28,8 +30,9 @@ MonoBehaviour:
       _StunningTime: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 2
-      _NanomachineCollectionRadius: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 2
+      _MaxHealthPoints: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -39,8 +42,9 @@ MonoBehaviour:
       _StunningTime: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 3
-      _NanomachineCollectionRadius: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 3
+      _MaxHealthPoints: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -50,8 +54,9 @@ MonoBehaviour:
       _StunningTime: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 4
-      _NanomachineCollectionRadius: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 4
+      _MaxHealthPoints: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -61,8 +66,9 @@ MonoBehaviour:
       _StunningTime: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 5
-      _NanomachineCollectionRadius: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 5
+      _MaxHealthPoints: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0

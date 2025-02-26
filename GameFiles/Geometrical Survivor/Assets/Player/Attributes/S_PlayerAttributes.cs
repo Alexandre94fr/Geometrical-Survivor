@@ -1,8 +1,35 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class S_PlayerAttributes : MonoBehaviour
 {
+    #region -= Events =-
+
+    // Basic
+    public static event Action<string> _OnPlayerNameUpdateEvent;
+
+    // Movement
+    public static event Action<int> _OnMovementSpeedUpdateEvent;
+
+    // Combat
+    public static event Action<int> _OnMaxHealthPointsUpdateEvent;
+    public static event Action<int> _OnHealthPointsUpdateEvent;
+
+    public static event Action<S_ActiveCapacityProperties> _OnEquippedActiveCapacityUpdateEvent;
+    public static event Action<List<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct>> _OnEquippedPassiveCapacityUpdateEvent;
+
+    // Experience
+    public static event Action<int> _OnNanomachinesNeededToLevelUpUpdateEvent;
+    public static event Action<int> _OnCollectedNanomachinesSinceLevelUpUpdateEvent;
+    public static event Action<int> _OnTechnologicalLevelUpdateEvent;
+
+    // Economy
+    public static event Action<int> _OnCollectedNanomachinesUpdateEvent;
+    public static event Action<int> _OnNanomachineCollectionRadiusUpdateEvent;
+
+    #endregion
+
     #region -= Getters / Setters =-
 
     #region - Basic -
@@ -19,6 +46,8 @@ public class S_PlayerAttributes : MonoBehaviour
             }
 
             _playerName = value;
+
+            _OnPlayerNameUpdateEvent?.Invoke(_playerName);
         }
     }
     #endregion
@@ -37,6 +66,8 @@ public class S_PlayerAttributes : MonoBehaviour
             }
 
             _movementSpeed = value;
+
+            _OnMovementSpeedUpdateEvent?.Invoke(_movementSpeed);
         }
     }
     #endregion
@@ -64,6 +95,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
             // Launch HUD update
             S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Health, _HealthPoints, _maxHealthPoints);
+
+            _OnMaxHealthPointsUpdateEvent?.Invoke(_maxHealthPoints);
         }
     }
 
@@ -87,6 +120,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
             // Launch HUD update
             S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Health, _healthPoints, _MaxHealthPoints);
+
+            _OnHealthPointsUpdateEvent?.Invoke(_healthPoints);
         }
     }
     #endregion
@@ -105,11 +140,61 @@ public class S_PlayerAttributes : MonoBehaviour
             }
 
             _equippedActiveCapacity = value;
+
+            // TODO : Add HUD event (change icon)
+
+            _OnEquippedActiveCapacityUpdateEvent?.Invoke(_equippedActiveCapacity);
         }
     }
 
-    // TODO : Equipped passive capacity
-    //public List<S_PassiveCapacity> _EquippedPassiveCapacities;
+    #region Equipped passive capacity
+
+    /// <summary>
+    /// <b> BEWARE : </b> If you want to use .Add() or .Remove(), please use the 
+    /// <see cref = "AddEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct)"/>, or 
+    /// <see cref = "RemoveEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct)"/> methods instead.
+    /// </summary>
+    public List<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct> _EquippedPassiveCapacities
+    {
+        get { return _equippedPassiveCapacities; }
+        set
+        {
+            if (value == null)
+            {
+                Debug.LogError($"ERROR ! Someone tryied to set '{nameof(_EquippedPassiveCapacities)}' to 'null'. That should not append.");
+                return;
+            }
+
+            _equippedPassiveCapacities = value;
+
+            LaunchEquippedPassiveCapacityInvokes();
+        }
+    }
+
+    public void AddEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
+    {
+        _equippedPassiveCapacities.Add(p_passiveCapacityPropertiesStruct);
+
+        LaunchEquippedPassiveCapacityInvokes();
+    }
+
+    public void RemoveEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
+    {
+        _equippedPassiveCapacities.Remove(p_passiveCapacityPropertiesStruct);
+
+        LaunchEquippedPassiveCapacityInvokes();
+    }
+
+    void LaunchEquippedPassiveCapacityInvokes()
+    {
+        UpdatePlayerAttributes();
+
+        // TODO : Add HUD event (change icon / order)
+
+        _OnEquippedPassiveCapacityUpdateEvent?.Invoke(_equippedPassiveCapacities);
+    }
+    #endregion
+
     #endregion
 
     #endregion
@@ -131,6 +216,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
             // Launch HUD update
             S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Nanomachine, _CollectedNanomachinesSinceLevelUp, _nanomachinesNeededToLevelUp);
+
+            _OnNanomachinesNeededToLevelUpUpdateEvent?.Invoke(_nanomachinesNeededToLevelUp);
         }
     }
 
@@ -165,6 +252,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
             // Launch HUD update
             S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Nanomachine, _collectedNanomachinesSinceLevelUp, _NanomachinesNeededToLevelUp);
+
+            _OnCollectedNanomachinesSinceLevelUpUpdateEvent?.Invoke(_collectedNanomachinesSinceLevelUp);
         }
     }
 
@@ -202,6 +291,8 @@ public class S_PlayerAttributes : MonoBehaviour
             );
 
             // TODO : Launch event update HUD (_TechnologicalLevel)
+
+            _OnTechnologicalLevelUpdateEvent?.Invoke(_technologicalLevel);
         }
     }
     #endregion
@@ -224,6 +315,25 @@ public class S_PlayerAttributes : MonoBehaviour
             }
 
             // TODO : Launch event update HUD (CollectedNanomachine)
+
+            _OnCollectedNanomachinesUpdateEvent?.Invoke(_collectedNanomachines);
+        }
+    }
+
+    public int _NanomachineCollectionRadius
+    {
+        get { return _nanomachineCollectionRadius; }
+        set
+        {
+            _nanomachineCollectionRadius = value;
+
+            if (_nanomachineCollectionRadius < 0)
+            {
+                Debug.LogError($"ERROR ! Someone tryied to set '{nameof(_nanomachineCollectionRadius)}' under 0. The variable's value has been set to 0.");
+                _nanomachineCollectionRadius = 0;
+            }
+
+            _OnNanomachineCollectionRadiusUpdateEvent?.Invoke(_nanomachineCollectionRadius);
         }
     }
     #endregion
@@ -251,7 +361,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
     [Space]
     [ReadOnlyInInspector] [SerializeField] S_ActiveCapacityProperties _equippedActiveCapacity;
-    // [ReadOnlyInInspector] [SerializeField] List<S_PassiveCapacity> _equippedPassiveCapacities;
+    [Tooltip("In inspector only : For the sake of the program, please do not add, remove, or modify any elements from the list. \nIt's only there to debug more easily.")]
+    [SerializeField] List<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct> _equippedPassiveCapacities;
 
     [Header(" Experience :")]
     [ReadOnlyInInspector] [SerializeField] int _nanomachinesNeededToLevelUp;
@@ -261,7 +372,7 @@ public class S_PlayerAttributes : MonoBehaviour
 
     [Header(" Economy :")]
     [ReadOnlyInInspector] [SerializeField] int _collectedNanomachines;
-
+    [ReadOnlyInInspector] [SerializeField] int _nanomachineCollectionRadius;
     #endregion
 
     int _firstNanomachinesNeededToLevelUp;
@@ -287,9 +398,15 @@ public class S_PlayerAttributes : MonoBehaviour
         _MaxHealthPoints = p_playerStatistics._MaxHealthPoints;
         _HealthPoints = _MaxHealthPoints;
 
-        // TODO : When created, un-comment
         _EquippedActiveCapacity = p_playerStatistics._EquippedActiveCapacity;
-        // _EquippedPassiveCapacities = p_playerStatistics._EquippedPassiveCapacities;
+
+        // Passive capacities (conversion of ScripableObject into PassiveCapacityPropertiesStruct)
+        _EquippedPassiveCapacities.Clear();
+
+        for (int i = 0; i < p_playerStatistics._EquippedPassiveCapacities.Count; i++)
+        {
+            AddEquippedPassiveCapacity(p_playerStatistics._EquippedPassiveCapacities[i]._PassiveCapacityProperties);
+        }
 
         // Experience
         _NanomachinesNeededToLevelUp = p_playerStatistics._NanomachinesNeededToLevelUp;
@@ -300,22 +417,12 @@ public class S_PlayerAttributes : MonoBehaviour
 
         // Economy
         _CollectedNanomachines = p_playerStatistics._CollectedNanomachines;
+        _NanomachineCollectionRadius = p_playerStatistics._NanomachineCollectionRadius;
 
         // NOTE : In order to update the possible UIs linked to the _CollectedNanomachinesSinceLevelUp variable, we call it
         _CollectedNanomachinesSinceLevelUp += 0;
-    }
 
-    /// <summary>
-    /// Will add the given value to the '<see cref="_CollectedNanomachines"/>' and the '<see cref="_CollectedNanomachinesSinceLevelUp"/>'.
-    /// 
-    /// <para> To <b>  subtract value, </b> just give a negative value. </para>
-    /// 
-    /// <para> To <b> set value, </b> please use the '<see cref="_CollectedNanomachines"/>' or/and the '<see cref="_CollectedNanomachinesSinceLevelUp"/>'. </para>
-    /// </summary>
-    public void AddNanomachine(int p_nanomachines)
-    {
-        _CollectedNanomachines += p_nanomachines;
-        _CollectedNanomachinesSinceLevelUp += p_nanomachines;
+        UpdatePlayerAttributes();
     }
 
     private void Update()
@@ -341,7 +448,18 @@ public class S_PlayerAttributes : MonoBehaviour
         // Health
         if (Input.GetKeyDown(KeyCode.F))
         {
-            _HealthPoints += 15;
+            S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct equippedPassiveCapacities = _EquippedPassiveCapacities[0];
+
+            if (equippedPassiveCapacities._CurrentLevel < equippedPassiveCapacities._MaxLevel)
+            {
+                equippedPassiveCapacities._CurrentLevel++;
+
+                _EquippedPassiveCapacities[0] = equippedPassiveCapacities;
+
+                UpdatePlayerAttributes();
+            }
+
+            //_HealthPoints += 15;
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -370,5 +488,56 @@ public class S_PlayerAttributes : MonoBehaviour
             _PlayerName = "    "; // Should cause error
         }
         #endregion
+    }
+
+    /// <summary>
+    /// Will add the given value to the '<see cref="_CollectedNanomachines"/>' and the '<see cref="_CollectedNanomachinesSinceLevelUp"/>'.
+    /// 
+    /// <para> To <b>  subtract value, </b> just give a negative value. </para>
+    /// 
+    /// <para> To <b> set value, </b> please use the '<see cref="_CollectedNanomachines"/>' or/and the '<see cref="_CollectedNanomachinesSinceLevelUp"/>'. </para>
+    /// </summary>
+    public void AddNanomachine(int p_nanomachines)
+    {
+        _CollectedNanomachines += p_nanomachines;
+        _CollectedNanomachinesSinceLevelUp += p_nanomachines;
+    }
+
+    void UpdatePlayerAttributes()
+    {
+        S_PassiveCapacityProperties.GamePropertiesStruct sumPassiveCapacityProperties = new();
+
+        for (int i = 0; i < _EquippedPassiveCapacities.Count; i++)
+        {
+            // We get the passive capacity properties of the good level
+            S_PassiveCapacityProperties.GamePropertiesStruct passiveCapacityProperties = _EquippedPassiveCapacities[i]._UpgradesPerLevels[_EquippedPassiveCapacities[i]._CurrentLevel - 1];
+
+            // Player properties
+            sumPassiveCapacityProperties._MovementSpeed += passiveCapacityProperties._MovementSpeed;
+
+            sumPassiveCapacityProperties._MaxHealthPoints += passiveCapacityProperties._MaxHealthPoints;
+
+            sumPassiveCapacityProperties._NanomachineCollectionRadius += passiveCapacityProperties._NanomachineCollectionRadius;
+
+            // Capacity properties
+            sumPassiveCapacityProperties._Damage += passiveCapacityProperties._Damage;
+            sumPassiveCapacityProperties._AttackReach += passiveCapacityProperties._AttackReach;
+            sumPassiveCapacityProperties._ArmingTime += passiveCapacityProperties._ArmingTime;
+            sumPassiveCapacityProperties._CooldownTime += passiveCapacityProperties._CooldownTime;
+
+            sumPassiveCapacityProperties._InvulnerabilityTime += passiveCapacityProperties._InvulnerabilityTime;
+            sumPassiveCapacityProperties._AttackLifetime += passiveCapacityProperties._AttackLifetime;
+
+            sumPassiveCapacityProperties._StunningTime += passiveCapacityProperties._StunningTime;
+            sumPassiveCapacityProperties._SelfStunningTimeWhenSucceed += passiveCapacityProperties._SelfStunningTimeWhenSucceed;
+            sumPassiveCapacityProperties._SelfStunningTimeWhenFailed += passiveCapacityProperties._SelfStunningTimeWhenFailed;
+        }
+
+        // Updating player's properties
+        _MovementSpeed = _playerStatistics._MovementSpeed + sumPassiveCapacityProperties._MovementSpeed;
+
+        _MaxHealthPoints = _playerStatistics._MaxHealthPoints + sumPassiveCapacityProperties._MaxHealthPoints;
+
+        _NanomachineCollectionRadius = _playerStatistics._NanomachineCollectionRadius + sumPassiveCapacityProperties._NanomachineCollectionRadius;
     }
 }

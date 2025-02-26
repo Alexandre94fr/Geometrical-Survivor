@@ -411,6 +411,7 @@ MonoBehaviour:
   _maxHealthPoints: 0
   _healthPoints: 0
   _equippedActiveCapacity: {fileID: 0}
+  _equippedPassiveCapacities: []
   _nanomachinesNeededToLevelUp: 0
   _collectedNanomachinesSinceLevelUp: 0
   _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain: 0
