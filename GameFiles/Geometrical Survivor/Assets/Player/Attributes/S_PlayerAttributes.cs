@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(1)]
 public class S_PlayerAttributes : MonoBehaviour
 {
     #region -= Events =-
