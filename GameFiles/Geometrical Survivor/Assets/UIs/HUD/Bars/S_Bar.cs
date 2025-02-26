@@ -59,7 +59,7 @@ public class S_Bar : MonoBehaviour
         new(0.85f, 0.85f, 0.85f, 1)
     );
 
-    void Start()
+    void Awake()
     {
         S_BarHandler._OnBarValueUpdateEvent += UpdateBar;
     }
@@ -68,6 +68,8 @@ public class S_Bar : MonoBehaviour
     {
         S_BarHandler._OnBarValueUpdateEvent -= UpdateBar;
     }
+
+#if UNITY_EDITOR
 
     void OnValidate()
     {
@@ -98,7 +100,7 @@ public class S_Bar : MonoBehaviour
         _barIconImage.sprite = _barComponentValues._BarIconSprite;
         _barIconBackgroundImage.sprite = _barComponentValues._BackgroundBarIconSprite;
     }
-
+#endif
 
     void UpdateBar(S_BarHandler.BarTypes p_barType, float p_newValue, float p_newMaxValue)
     {

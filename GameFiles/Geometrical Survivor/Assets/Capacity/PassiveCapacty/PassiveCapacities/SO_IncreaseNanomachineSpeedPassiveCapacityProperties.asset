@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7938e2cb7e02b0469ac2635fcd59b8c, type: 3}
+  m_Name: SO_IncreaseNanomachineSpeedPassiveCapacityProperties
+  m_EditorClassIdentifier: 
+  _PassiveCapacityProperties:
+    _Name: Increase nanomachine speed
+    _Price: 35
+    _UpgradableNumber: 5
+    _CurrentLevel: 1
+    _UpgradesPerLevels:
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 1
+      _MaxHealthPoints: 0
+      _Damage: 0
+      _AttackReach: 0
+      _ArmingTime: 0
+      _CooldownTime: 0
+      _InvulnerabilityTime: 0
+      _AttackLifetime: 0
+      _StunningTime: 0
+      _SelfStunningTimeWhenSucceed: 0
+      _SelfStunningTimeWhenFailed: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 2
+      _MaxHealthPoints: 0
+      _Damage: 0
+      _AttackReach: 0
+      _ArmingTime: 0
+      _CooldownTime: 0
+      _InvulnerabilityTime: 0
+      _AttackLifetime: 0
+      _StunningTime: 0
+      _SelfStunningTimeWhenSucceed: 0
+      _SelfStunningTimeWhenFailed: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 3
+      _MaxHealthPoints: 0
+      _Damage: 0
+      _AttackReach: 0
+      _ArmingTime: 0
+      _CooldownTime: 0
+      _InvulnerabilityTime: 0
+      _AttackLifetime: 0
+      _StunningTime: 0
+      _SelfStunningTimeWhenSucceed: 0
+      _SelfStunningTimeWhenFailed: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 4
+      _MaxHealthPoints: 0
+      _Damage: 0
+      _AttackReach: 0
+      _ArmingTime: 0
+      _CooldownTime: 0
+      _InvulnerabilityTime: 0
+      _AttackLifetime: 0
+      _StunningTime: 0
+      _SelfStunningTimeWhenSucceed: 0
+      _SelfStunningTimeWhenFailed: 0
+    - _NanomachineCollectionRadius: 0
+      _MovementSpeed: 5
+      _MaxHealthPoints: 0
+      _Damage: 0
+      _AttackReach: 0
+      _ArmingTime: 0
+      _CooldownTime: 0
+      _InvulnerabilityTime: 0
+      _AttackLifetime: 0
+      _StunningTime: 0
+      _SelfStunningTimeWhenSucceed: 0
+      _SelfStunningTimeWhenFailed: 0

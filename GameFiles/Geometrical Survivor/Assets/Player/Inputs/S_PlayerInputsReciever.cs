@@ -59,7 +59,7 @@ public class S_PlayerInputsReciever : MonoBehaviour
     {
         if (p_callbackContext.performed)
         {
-            // TODO: Invoke S_Player event nammed OnActiveCapacityUseEvent
+            S_PlayerController._OnActiveCapacityUseEvent?.Invoke();
         }
     }
 

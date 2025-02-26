@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SO_PlayerStatistics", menuName = "ScripableObject/PlayerStatistics")]
-public class S_PlayerStatistics : ScriptableObject
+[CreateAssetMenu(fileName = "SO_PlayerProperties", menuName = "ScriptableObject/PlayerProperties")]
+public class S_PlayerProperties : ScriptableObject
 {
     [Header(" Basic :")]
     public string _PlayerName = "Player";
@@ -13,11 +13,9 @@ public class S_PlayerStatistics : ScriptableObject
     [Header(" Combat :")]
     public int _MaxHealthPoints = 100;
 
-    // TODO : Equipped active capacity
-    //public S_ActiveCapacity _EquippedActiveCapacity; 
-
-    // TODO : Equipped passive capacity
-    //public List<S_PassiveCapacity> _EquippedPassiveCapacities;
+    [Space]
+    public S_ActiveCapacityProperties _EquippedActiveCapacity; 
+    public List<S_PassiveCapacityProperties> _EquippedPassiveCapacities;
 
     [Header(" Experience :")]
     public int _NanomachinesNeededToLevelUp = 25;
@@ -26,4 +24,5 @@ public class S_PlayerStatistics : ScriptableObject
 
     [Header(" Economy :")]
     public int _CollectedNanomachines = 0;
+    public int _NanomachineCollectionRadius = 1;
 }
