@@ -417,6 +417,7 @@ MonoBehaviour:
   _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain: 0
   _technologicalLevel: 0
   _collectedNanomachines: 0
+  _nanomachineCollectionRadius: 0
 --- !u!1 &7748163634826311131
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,4 +578,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
