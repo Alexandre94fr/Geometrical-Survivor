@@ -61,6 +61,10 @@ public class S_PlayerInputsReciever : MonoBehaviour
         {
             S_PlayerController._OnActiveCapacityUseEvent?.Invoke();
         }
+        else if (p_callbackContext.canceled)
+        {
+            S_PlayerController._OnActiveCapacityUnUseEvent?.Invoke();
+        }
     }
 
     public void OnPauseUnPauseInput(InputAction.CallbackContext p_callbackContext)
