@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PassiveCapacityProperties:
     _Name: Increase nanomachine speed
-    _Price: 35
-    _UpgradableNumber: 5
+    _MaxLevel: 5
     _CurrentLevel: 1
     _UpgradesPerLevels:
-    - _NanomachineCollectionRadius: 0
+    - _Price: 30
       _MovementSpeed: 1
       _MaxHealthPoints: 0
+      _NanomachineCollectionRadius: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -28,11 +28,13 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _NanomachineCollectionRadius: 0
+    - _Price: 40
       _MovementSpeed: 2
       _MaxHealthPoints: 0
+      _NanomachineCollectionRadius: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -40,11 +42,13 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _NanomachineCollectionRadius: 0
+    - _Price: 50
       _MovementSpeed: 3
       _MaxHealthPoints: 0
+      _NanomachineCollectionRadius: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -52,11 +56,13 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _NanomachineCollectionRadius: 0
+    - _Price: 60
       _MovementSpeed: 4
       _MaxHealthPoints: 0
+      _NanomachineCollectionRadius: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -64,11 +70,13 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _NanomachineCollectionRadius: 0
+    - _Price: 70
       _MovementSpeed: 5
       _MaxHealthPoints: 0
+      _NanomachineCollectionRadius: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
@@ -76,5 +84,6 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0

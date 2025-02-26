@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PassiveCapacityProperties:
     _Name: Cooler upgrade
-    _Price: 40
     _MaxLevel: 5
     _CurrentLevel: 1
     _UpgradesPerLevels:
-    - _MovementSpeed: 0
+    - _Price: 40
+      _MovementSpeed: 0
       _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 0
       _Damage: 0
@@ -31,7 +31,8 @@ MonoBehaviour:
       _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 0
+    - _Price: 50
+      _MovementSpeed: 0
       _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 0
       _Damage: 0
@@ -44,7 +45,8 @@ MonoBehaviour:
       _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 0
+    - _Price: 60
+      _MovementSpeed: 0
       _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 0
       _Damage: 0
@@ -57,7 +59,8 @@ MonoBehaviour:
       _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 0
+    - _Price: 70
+      _MovementSpeed: 0
       _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 0
       _Damage: 0
@@ -70,7 +73,8 @@ MonoBehaviour:
       _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 0
+    - _Price: 100
+      _MovementSpeed: 0
       _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 0
       _Damage: 0

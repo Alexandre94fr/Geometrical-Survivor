@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PassiveCapacityProperties:
     _Name: Nanomachine magnet
-    _Price: 50
-    _UpgradableNumber: 3
+    _MaxLevel: 3
+    _CurrentLevel: 1
     _UpgradesPerLevels:
-    - _MovementSpeed: 0
+    - _Price: 35
+      _MovementSpeed: 0
+      _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 1
       _Damage: 0
       _AttackReach: 0
@@ -26,9 +28,12 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 0
+    - _Price: 50
+      _MovementSpeed: 0
+      _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 2
       _Damage: 0
       _AttackReach: 0
@@ -37,9 +42,12 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _MovementSpeed: 0
+    - _Price: 65
+      _MovementSpeed: 0
+      _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 3
       _Damage: 0
       _AttackReach: 0
@@ -48,5 +56,6 @@ MonoBehaviour:
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0
+      _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
