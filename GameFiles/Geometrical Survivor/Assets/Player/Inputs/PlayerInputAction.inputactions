@@ -133,6 +133,28 @@
                 },
                 {
                     "name": "",
+                    "id": "01cdef2c-87a7-403e-89a7-642ff7e14276",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "UseActiveCapacity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a98aa8e1-6dd5-4047-8a2e-f6413526f653",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "UseActiveCapacity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "80f1189e-3a72-4b01-81b1-127144086ec4",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
