@@ -34,6 +34,8 @@ public class S_EnemyController : MonoBehaviour
     {
         _movementDirection = GetMovementDirection(_targetTransform.position);
 
+        UpdateEnemyOrientation(_movementDirection);
+
         Vector3 positionOffset = _movementSpeed * Time.deltaTime * _movementDirection;
 
         _enemyTransform.position += positionOffset;
@@ -58,5 +60,12 @@ public class S_EnemyController : MonoBehaviour
     Vector2 GetMovementDirection(Vector3 p_targetPosition)
     {
         return (p_targetPosition - transform.position).normalized;
+    }
+
+    void UpdateEnemyOrientation(Vector2 p_newOrientation)
+    {
+        float rotationAngle = Mathf.Atan2(p_newOrientation.y, p_newOrientation.x) * Mathf.Rad2Deg;
+
+        _enemyTransform.rotation = Quaternion.Euler(0, 0, rotationAngle - 90);
     }
 }
