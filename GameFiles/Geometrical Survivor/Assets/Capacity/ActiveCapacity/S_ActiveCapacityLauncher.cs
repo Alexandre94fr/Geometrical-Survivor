@@ -6,6 +6,7 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
 {
     [Header(" External references")]
     [SerializeField] Transform _launcherTransform;
+    [SerializeField] S_PlayerAttributes _playerAttributes; // TODO : This is a problem because Enemy don't have that
 
     [Header(" Properties :")]
     S_DefaultProjectile.ProjectileOwnerEnum _projectileOwner;
@@ -15,7 +16,8 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
-            (_launcherTransform, nameof(_launcherTransform))
+            (_launcherTransform, nameof(_launcherTransform)),
+            (_playerAttributes, nameof(_playerAttributes))
         )) return;
     }
 
@@ -24,9 +26,9 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
         if (!_canLaunchActiveCapacity)
             return;
 
-        StartCoroutine(LaunchActiveCapacityTimer(p_activeCapacityStruct._CooldownTime));
-
         ModifyActiveCapacityAttributes(ref p_activeCapacityStruct);
+
+        StartCoroutine(LaunchActiveCapacityTimer(p_activeCapacityStruct._CooldownTime));
 
         if (p_activeCapacityStruct._DoesInstantiateProjectile)
         {
@@ -56,7 +58,23 @@ public class S_ActiveCapacityLauncher : MonoBehaviour
 
     void ModifyActiveCapacityAttributes(ref S_ActiveCapacityProperties.ActiveCapacityStruct p_activeCapacityStruct)
     {
-        // TODO : Change active capacity struct values based on passive capacities
+        // Capacity properties
+        p_activeCapacityStruct._AttackDamage += _playerAttributes._SumPassiveCapacityProperties._Damage;
+        p_activeCapacityStruct._AttackReach += _playerAttributes._SumPassiveCapacityProperties._AttackReach;
+
+        p_activeCapacityStruct._ArmingTime += _playerAttributes._SumPassiveCapacityProperties._ArmingTime;
+        p_activeCapacityStruct._InvulnerabilityTime += _playerAttributes._SumPassiveCapacityProperties._InvulnerabilityTime;
+        p_activeCapacityStruct._AttackLifetime += _playerAttributes._SumPassiveCapacityProperties._AttackLifetime;
+        p_activeCapacityStruct._CooldownTime += _playerAttributes._SumPassiveCapacityProperties._CooldownTime;
+
+        // In case the value goes under 0
+        if (p_activeCapacityStruct._CooldownTime < 0)
+            p_activeCapacityStruct._CooldownTime = 0;
+
+        p_activeCapacityStruct._AttackStunningTime += _playerAttributes._SumPassiveCapacityProperties._StunningTime;
+        p_activeCapacityStruct._AttackKnockback += _playerAttributes._SumPassiveCapacityProperties._AttackKnockback;
+        p_activeCapacityStruct._SelfStunningTimeWhenSucceed += _playerAttributes._SumPassiveCapacityProperties._SelfStunningTimeWhenSucceed;
+        p_activeCapacityStruct._SelfStunningTimeWhenFailed += _playerAttributes._SumPassiveCapacityProperties._SelfStunningTimeWhenFailed;
     }
 
     GameObject InstantiateProjectile(ref S_ActiveCapacityProperties.ActiveCapacityStruct p_activeCapacityStruct)

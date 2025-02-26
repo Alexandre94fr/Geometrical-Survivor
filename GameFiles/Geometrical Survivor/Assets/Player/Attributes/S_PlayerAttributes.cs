@@ -340,6 +340,8 @@ public class S_PlayerAttributes : MonoBehaviour
 
     #endregion
 
+    [HideInInspector] public S_PassiveCapacityProperties.GamePropertiesStruct _SumPassiveCapacityProperties = new();
+
     [Header(" Debugging :")]
     [SerializeField] bool _isDebuggingKeysEnabled;
 
@@ -505,7 +507,7 @@ public class S_PlayerAttributes : MonoBehaviour
 
     void UpdatePlayerAttributes()
     {
-        S_PassiveCapacityProperties.GamePropertiesStruct sumPassiveCapacityProperties = new();
+        _SumPassiveCapacityProperties = new();
 
         for (int i = 0; i < _EquippedPassiveCapacities.Count; i++)
         {
@@ -513,31 +515,32 @@ public class S_PlayerAttributes : MonoBehaviour
             S_PassiveCapacityProperties.GamePropertiesStruct passiveCapacityProperties = _EquippedPassiveCapacities[i]._UpgradesPerLevels[_EquippedPassiveCapacities[i]._CurrentLevel - 1];
 
             // Player properties
-            sumPassiveCapacityProperties._MovementSpeed += passiveCapacityProperties._MovementSpeed;
+            _SumPassiveCapacityProperties._MovementSpeed += passiveCapacityProperties._MovementSpeed;
 
-            sumPassiveCapacityProperties._MaxHealthPoints += passiveCapacityProperties._MaxHealthPoints;
+            _SumPassiveCapacityProperties._MaxHealthPoints += passiveCapacityProperties._MaxHealthPoints;
 
-            sumPassiveCapacityProperties._NanomachineCollectionRadius += passiveCapacityProperties._NanomachineCollectionRadius;
+            _SumPassiveCapacityProperties._NanomachineCollectionRadius += passiveCapacityProperties._NanomachineCollectionRadius;
 
             // Capacity properties
-            sumPassiveCapacityProperties._Damage += passiveCapacityProperties._Damage;
-            sumPassiveCapacityProperties._AttackReach += passiveCapacityProperties._AttackReach;
-            sumPassiveCapacityProperties._ArmingTime += passiveCapacityProperties._ArmingTime;
-            sumPassiveCapacityProperties._CooldownTime += passiveCapacityProperties._CooldownTime;
+            _SumPassiveCapacityProperties._Damage += passiveCapacityProperties._Damage;
+            _SumPassiveCapacityProperties._AttackReach += passiveCapacityProperties._AttackReach;
 
-            sumPassiveCapacityProperties._InvulnerabilityTime += passiveCapacityProperties._InvulnerabilityTime;
-            sumPassiveCapacityProperties._AttackLifetime += passiveCapacityProperties._AttackLifetime;
+            _SumPassiveCapacityProperties._ArmingTime += passiveCapacityProperties._ArmingTime;
+            _SumPassiveCapacityProperties._InvulnerabilityTime += passiveCapacityProperties._InvulnerabilityTime;
+            _SumPassiveCapacityProperties._AttackLifetime += passiveCapacityProperties._AttackLifetime;
+            _SumPassiveCapacityProperties._CooldownTime += passiveCapacityProperties._CooldownTime;
 
-            sumPassiveCapacityProperties._StunningTime += passiveCapacityProperties._StunningTime;
-            sumPassiveCapacityProperties._SelfStunningTimeWhenSucceed += passiveCapacityProperties._SelfStunningTimeWhenSucceed;
-            sumPassiveCapacityProperties._SelfStunningTimeWhenFailed += passiveCapacityProperties._SelfStunningTimeWhenFailed;
+            _SumPassiveCapacityProperties._StunningTime += passiveCapacityProperties._StunningTime;
+            _SumPassiveCapacityProperties._AttackKnockback += passiveCapacityProperties._AttackKnockback;
+            _SumPassiveCapacityProperties._SelfStunningTimeWhenSucceed += passiveCapacityProperties._SelfStunningTimeWhenSucceed;
+            _SumPassiveCapacityProperties._SelfStunningTimeWhenFailed += passiveCapacityProperties._SelfStunningTimeWhenFailed;
         }
 
         // Updating player's properties
-        _MovementSpeed = _playerStatistics._MovementSpeed + sumPassiveCapacityProperties._MovementSpeed;
+        _MovementSpeed = _playerStatistics._MovementSpeed + _SumPassiveCapacityProperties._MovementSpeed;
 
-        _MaxHealthPoints = _playerStatistics._MaxHealthPoints + sumPassiveCapacityProperties._MaxHealthPoints;
+        _MaxHealthPoints = _playerStatistics._MaxHealthPoints + _SumPassiveCapacityProperties._MaxHealthPoints;
 
-        _NanomachineCollectionRadius = _playerStatistics._NanomachineCollectionRadius + sumPassiveCapacityProperties._NanomachineCollectionRadius;
+        _NanomachineCollectionRadius = _playerStatistics._NanomachineCollectionRadius + _SumPassiveCapacityProperties._NanomachineCollectionRadius;
     }
 }

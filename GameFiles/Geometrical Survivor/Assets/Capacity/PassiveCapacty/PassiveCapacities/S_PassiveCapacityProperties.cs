@@ -11,9 +11,6 @@ public class S_PassiveCapacityProperties : ScriptableObject
         [Header(" Basics :")]
         public string _Name;
 
-        [Header(" Economy :")]
-        public int _Price;
-
         [Header(" Upgrades :")]
         [Tooltip("Use that value as a getter, you can use '_PassiveCapacityProperties._UpgradesPerLevels.Count' to get the same result.")]
         [ReadOnlyInInspector] public int _MaxLevel;
@@ -27,6 +24,9 @@ public class S_PassiveCapacityProperties : ScriptableObject
     [Serializable]
     public struct GamePropertiesStruct
     {
+        [Header(" Economy :")]
+        public int _Price;
+
         [Header(" Character properties :")]
         public int _MovementSpeed;
 
@@ -41,7 +41,7 @@ public class S_PassiveCapacityProperties : ScriptableObject
         public int _Damage;
         public int _AttackReach;
         public int _ArmingTime;
-        public int _CooldownTime;
+        public float _CooldownTime;
 
         [Space]
         public int _InvulnerabilityTime;
@@ -49,6 +49,7 @@ public class S_PassiveCapacityProperties : ScriptableObject
 
         [Space]
         public int _StunningTime;
+        public float _AttackKnockback;
         public int _SelfStunningTimeWhenSucceed;
         public int _SelfStunningTimeWhenFailed;
     }

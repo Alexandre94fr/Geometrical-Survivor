@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class S_PlayerController : MonoBehaviour
@@ -6,6 +7,7 @@ public class S_PlayerController : MonoBehaviour
     public static Action<Vector2> _OnPlayerMoveInputEvent;
     public static Action<Vector2> _OnPlayerRotateEvent;
     public static Action _OnActiveCapacityUseEvent;
+    public static Action _OnActiveCapacityUnUseEvent;
 
     [Header(" External references :")]
     [SerializeField] Transform _playerTransform;
@@ -18,6 +20,7 @@ public class S_PlayerController : MonoBehaviour
     [SerializeField] S_PlayerProperties _playerStatistics;
     [SerializeField] S_PlayerAttributes _playerAttributes;
 
+    bool _doesPlayerHoldingActiveCapacityLaunchingKey;
     int _movementSpeed;
     Vector2 _movementDirection;
 
@@ -39,7 +42,8 @@ public class S_PlayerController : MonoBehaviour
 
         _OnPlayerMoveInputEvent += UpdateMovementDirection;
         _OnPlayerRotateEvent += UpdatePlayerOrientation;
-        _OnActiveCapacityUseEvent += TryLaunchActiveCapacity;
+        _OnActiveCapacityUseEvent += StartTryLaunchActiveCapacity;
+        _OnActiveCapacityUnUseEvent += StopTryLaunchActiveCapacity;
     }
 
     void Update()
@@ -67,8 +71,25 @@ public class S_PlayerController : MonoBehaviour
         _playerTransform.rotation = Quaternion.Euler(0, 0, rotationAngle - 90);
     }
 
-    void TryLaunchActiveCapacity()
+    void StartTryLaunchActiveCapacity()
     {
-        _playerActiveCapacityLauncher.TryLaunchActiveCapacity(_playerAttributes._EquippedActiveCapacity._ActiveCapacityProperties);
+        _doesPlayerHoldingActiveCapacityLaunchingKey = true;
+
+        StartCoroutine(TryLaunchActiveCapactity());
+    }
+
+    void StopTryLaunchActiveCapacity()
+    {
+        _doesPlayerHoldingActiveCapacityLaunchingKey = false;
+    }
+
+    IEnumerator TryLaunchActiveCapactity()
+    {
+        while (_doesPlayerHoldingActiveCapacityLaunchingKey)
+        {
+            _playerActiveCapacityLauncher.TryLaunchActiveCapacity(_playerAttributes._EquippedActiveCapacity._ActiveCapacityProperties);
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
