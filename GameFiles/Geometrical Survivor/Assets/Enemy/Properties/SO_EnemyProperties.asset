@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c5db884baa5a9c49a67cf8e5d1718df, type: 3}
+  m_Name: SO_EnemyProperties
+  m_EditorClassIdentifier: 
+  _EnemyProperties:
+    _Name: Enemy
+    _Sprite: {fileID: 21300000, guid: b81cb59ee8ff663438a39b26f0cdada7, type: 3}
+    _MovementSpeed: 3
+    _MaxHealthPoints: 10
+    _AttackDamage: 5
+    _AttackCooldownTime: 1
+    _NanomachinesDroppedWhenKilled: 5
