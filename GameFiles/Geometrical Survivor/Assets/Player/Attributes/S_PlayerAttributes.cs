@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(1)]
 public class S_PlayerAttributes : MonoBehaviour
 {
     #region -= Events =-
@@ -388,38 +389,38 @@ public class S_PlayerAttributes : MonoBehaviour
         InitializingPlayerAttributes(_playerStatistics);
     }
 
-    void InitializingPlayerAttributes(S_PlayerProperties p_playerStatistics)
+    void InitializingPlayerAttributes(S_PlayerProperties p_playerProperties)
     {
         // Basic
-        _PlayerName = p_playerStatistics._PlayerName;
+        _PlayerName = p_playerProperties._PlayerName;
 
         // Movement
-        _MovementSpeed = p_playerStatistics._MovementSpeed;
+        _MovementSpeed = p_playerProperties._MovementSpeed;
 
         // Combat
-        _MaxHealthPoints = p_playerStatistics._MaxHealthPoints;
+        _MaxHealthPoints = p_playerProperties._MaxHealthPoints;
         _HealthPoints = _MaxHealthPoints;
 
-        _EquippedActiveCapacity = p_playerStatistics._EquippedActiveCapacity;
+        _EquippedActiveCapacity = p_playerProperties._EquippedActiveCapacity;
 
         // Passive capacities (conversion of ScripableObject into PassiveCapacityPropertiesStruct)
         _EquippedPassiveCapacities.Clear();
 
-        for (int i = 0; i < p_playerStatistics._EquippedPassiveCapacities.Count; i++)
+        for (int i = 0; i < p_playerProperties._EquippedPassiveCapacities.Count; i++)
         {
-            AddEquippedPassiveCapacity(p_playerStatistics._EquippedPassiveCapacities[i]._PassiveCapacityProperties);
+            AddEquippedPassiveCapacity(p_playerProperties._EquippedPassiveCapacities[i]._PassiveCapacityProperties);
         }
 
         // Experience
-        _NanomachinesNeededToLevelUp = p_playerStatistics._NanomachinesNeededToLevelUp;
+        _NanomachinesNeededToLevelUp = p_playerProperties._NanomachinesNeededToLevelUp;
         _firstNanomachinesNeededToLevelUp = _NanomachinesNeededToLevelUp;
 
-        _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain = p_playerStatistics._NanomachinesNeededToLevelUpGrowthFactorPerLevelGain;
-        _TechnologicalLevel = p_playerStatistics._TechnologicalLevel;
+        _nanomachinesNeededToLevelUpGrowthFactorPerLevelGain = p_playerProperties._NanomachinesNeededToLevelUpGrowthFactorPerLevelGain;
+        _TechnologicalLevel = p_playerProperties._TechnologicalLevel;
 
         // Economy
-        _CollectedNanomachines = p_playerStatistics._CollectedNanomachines;
-        _NanomachineCollectionRadius = p_playerStatistics._NanomachineCollectionRadius;
+        _CollectedNanomachines = p_playerProperties._CollectedNanomachines;
+        _NanomachineCollectionRadius = p_playerProperties._NanomachineCollectionRadius;
 
         // NOTE : In order to update the possible UIs linked to the _CollectedNanomachinesSinceLevelUp variable, we call it
         _CollectedNanomachinesSinceLevelUp += 0;

@@ -17,6 +17,7 @@ public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
     int _projectileDamage;
 
     bool _isProjectileLaunched = false;
+    bool _hasCollision = false;
 
     void Start()
     {
@@ -35,11 +36,16 @@ public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
 
     void OnCollisionEnter2D(Collision2D p_collision2D)
     {
+        if (_hasCollision)
+            return;
+
+        _hasCollision = true;
+
         Transform colliderTransform = p_collision2D.transform;
 
         if (_projectileOwner == ProjectileOwnerEnum.Player && colliderTransform.CompareTag("Enemy"))
         {
-            // TODO : Deal damage to the enemy
+            colliderTransform.GetComponentInChildren<S_EnemyAttributes>()._HealthPoints -= _projectileDamage;
 
             SelfDestroy();
         }
@@ -56,6 +62,8 @@ public class S_DefaultProjectile : MonoBehaviour, S_IProjectile
         else
         {
             Debug.LogWarning($"WARNING ! The Script '{this}' hasn't planned a collision with the '{p_collision2D.gameObject.name}' GameObject.");
+
+            _hasCollision = false;
         }
     }
 
