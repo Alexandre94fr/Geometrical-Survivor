@@ -406,6 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SumPassiveCapacityProperties:
+    _Price: 0
     _MovementSpeed: 0
     _MaxHealthPoints: 0
     _NanomachineCollectionRadius: 0
