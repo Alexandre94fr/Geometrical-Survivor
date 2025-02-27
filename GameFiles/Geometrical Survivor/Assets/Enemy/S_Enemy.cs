@@ -42,6 +42,8 @@ public class S_Enemy : MonoBehaviour
 
     void OnDeath()
     {
+        S_NanomachinesManager._Instance.InstantiateNanomachineObject(transform.position, _EnemyStatistics._EnemyProperties._NanomachinesDroppedWhenKilled);
+
         Destroy(gameObject.transform.parent.gameObject);
     }
 }
