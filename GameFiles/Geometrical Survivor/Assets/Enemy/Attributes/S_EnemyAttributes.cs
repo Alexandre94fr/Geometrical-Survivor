@@ -104,9 +104,6 @@ public class S_EnemyAttributes : MonoBehaviour
 
             _maxHealthPoints = value;
 
-            // Launch HUD update
-            S_BarHandler.NotifyBarValueChange(S_BarHandler.BarTypes.Health, _HealthPoints, _maxHealthPoints);
-
             _OnMaxHealthPointsUpdateEvent?.Invoke(_enemy, _maxHealthPoints);
         }
     }
