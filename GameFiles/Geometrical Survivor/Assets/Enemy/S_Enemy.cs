@@ -11,7 +11,6 @@ public class S_Enemy : MonoBehaviour
 
     SpriteRenderer _spriteRenderer;
 
-
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
@@ -22,11 +21,6 @@ public class S_Enemy : MonoBehaviour
         S_EnemyAttributes._OnHealthPointsUpdateEvent += OnHealthUpdate;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    void Update()
-    {
-        
     }
 
     void UpdateSprite(S_Enemy p_enemy, Sprite p_newSprite)
