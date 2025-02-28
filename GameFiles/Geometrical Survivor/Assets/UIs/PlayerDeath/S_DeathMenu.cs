@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class S_DeathMenu : MonoBehaviour
 {
@@ -7,11 +8,13 @@ public class S_DeathMenu : MonoBehaviour
 
     [Header(" Internal references :")]
     [SerializeField] GameObject _deathMenuGameObject;
+    [SerializeField] Button _firstButtonSelected;
 
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
-            (_deathMenuGameObject, nameof(_deathMenuGameObject))
+            (_deathMenuGameObject, nameof(_deathMenuGameObject)),
+            (_firstButtonSelected, nameof(_firstButtonSelected))
         )) return;
 
         S_PlayerAttributes._OnHealthPointsUpdateEvent += CheckPlayerDeath;
@@ -39,5 +42,7 @@ public class S_DeathMenu : MonoBehaviour
         Time.timeScale = 0;
 
         _deathMenuGameObject.SetActive(true);
+
+        _firstButtonSelected.Select();
     }
 }

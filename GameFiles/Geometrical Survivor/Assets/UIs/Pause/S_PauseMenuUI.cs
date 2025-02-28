@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class S_PauseMenuUI : MonoBehaviour
 {
@@ -7,11 +9,17 @@ public class S_PauseMenuUI : MonoBehaviour
 
     [Header(" Internal references :")]
     [SerializeField] GameObject _pauseMenuUIGameObject;
+    [SerializeField] Button _firstButtonSelected;
 
     bool _isPlayerPauseMenuVisible;
 
     void Start()
     {
+        if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
+            (_pauseMenuUIGameObject, nameof(_pauseMenuUIGameObject)),
+            (_firstButtonSelected, nameof(_firstButtonSelected))
+        )) return;
+
         S_DeathMenu._OnPlayerDeathMenuVisibiltyChangeEvent += UpdatePlayerPauseMenuVisibility;
         _OnPlayerPauseEvent += ChangePlayerPauseMenuVisibility;
     }
@@ -33,6 +41,8 @@ public class S_PauseMenuUI : MonoBehaviour
         {
             _pauseMenuUIGameObject.SetActive(true);
             Time.timeScale = 0f;
+
+            _firstButtonSelected.Select();
         }
         else
         {
