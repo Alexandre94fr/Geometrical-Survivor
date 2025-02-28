@@ -7,6 +7,10 @@ public class S_DeathMenu : MonoBehaviour
 
     void Start()
     {
+        if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
+            (_deathMenuGameObject, nameof(_deathMenuGameObject))
+        )) return;
+
         S_PlayerAttributes._OnHealthPointsUpdateEvent += CheckPlayerDeath;
 
         _deathMenuGameObject.SetActive(false);
