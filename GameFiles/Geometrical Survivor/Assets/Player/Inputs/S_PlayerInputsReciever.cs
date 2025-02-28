@@ -71,7 +71,7 @@ public class S_PlayerInputsReciever : MonoBehaviour
     {
         if (p_callbackContext.performed)
         {
-            // TODO: Invoke S_Player event nammed OnPlayerPauseEvent
+            S_PauseMenuUI._OnPlayerPauseEvent?.Invoke();
         }
     }
 }
