@@ -111,9 +111,6 @@ public class S_PlayerAttributes : MonoBehaviour
             if (_healthPoints <= 0)
             {
                 _healthPoints = 0;
-
-                print("Health : Player die");
-                // TODO : Launch a death event (Health)
             }
 
             if (_healthPoints > _MaxHealthPoints)
