@@ -46,6 +46,7 @@ public class S_Bar : MonoBehaviour
     [SerializeField] Image _backgroundImage;
 
     [Space]
+    [SerializeField] bool _doesBarHaveIcon = true;
     [SerializeField] Image _barIconImage;
     [SerializeField] Image _barIconBackgroundImage;
 
@@ -81,11 +82,16 @@ public class S_Bar : MonoBehaviour
 
             (_fileBarImage, nameof(_fileBarImage)),
             (_fileBarBackgroundImage, nameof(_fileBarBackgroundImage)),
-            (_backgroundImage, nameof(_backgroundImage)),
-
-            (_barIconImage, nameof(_barIconImage)),
-            (_barIconBackgroundImage, nameof(_barIconBackgroundImage))
+            (_backgroundImage, nameof(_backgroundImage))
         )) return;
+
+        if (_doesBarHaveIcon)
+        {
+            if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
+                (_barIconImage, nameof(_barIconImage)),
+                (_barIconBackgroundImage, nameof(_barIconBackgroundImage))
+            )) return;
+        }
 
         // Updating colors
         _fileBarImage.color = _barComponentValues._FileBarColor;
@@ -97,8 +103,11 @@ public class S_Bar : MonoBehaviour
         _fileBarBackgroundImage.sprite = _barComponentValues._FileBarBackgroundSprite;
         _backgroundImage.sprite = _barComponentValues._BackgroundSprite;
 
-        _barIconImage.sprite = _barComponentValues._BarIconSprite;
-        _barIconBackgroundImage.sprite = _barComponentValues._BackgroundBarIconSprite;
+        if (_doesBarHaveIcon)
+        {
+            _barIconImage.sprite = _barComponentValues._BarIconSprite;
+            _barIconBackgroundImage.sprite = _barComponentValues._BackgroundBarIconSprite;
+        }
     }
 #endif
 
