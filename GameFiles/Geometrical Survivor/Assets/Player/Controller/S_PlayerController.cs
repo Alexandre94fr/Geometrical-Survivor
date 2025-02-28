@@ -83,6 +83,10 @@ public class S_PlayerController : MonoBehaviour
 
     void StartTryLaunchActiveCapacity()
     {
+        // Don't launch active capacity when pause is enabled
+        if (Time.timeScale == 0)
+            return;
+
         _doesPlayerHoldingActiveCapacityLaunchingKey = true;
 
         StartCoroutine(TryLaunchActiveCapactity());
