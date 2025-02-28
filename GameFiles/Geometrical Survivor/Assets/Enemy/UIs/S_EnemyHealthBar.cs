@@ -31,6 +31,12 @@ public class S_EnemyHealthBar : MonoBehaviour
         S_EnemyAttributes._OnMaxHealthPointsUpdateEvent += OnMaxHealthPointsUpdate;
     }
 
+    void OnDestroy()
+    {
+        S_EnemyAttributes._OnHealthPointsUpdateEvent -= OnHealthPointsUpdate;
+        S_EnemyAttributes._OnMaxHealthPointsUpdateEvent -= OnMaxHealthPointsUpdate;
+    }
+
     void OnHealthPointsUpdate(S_Enemy p_enemy, int p_healthPoints)
     {
         if (p_enemy != _enemy)

@@ -26,6 +26,12 @@ public class S_Enemy : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    void OnDestroy()
+    {
+        S_EnemyAttributes._OnEnemySpriteUpdateEvent -= UpdateSprite;
+        S_EnemyAttributes._OnHealthPointsUpdateEvent -= OnHealthUpdate;
+    }
+
     void OnCollisionEnter2D(Collision2D p_collision2D)
     {
         if (p_collision2D.transform.CompareTag("Player"))
