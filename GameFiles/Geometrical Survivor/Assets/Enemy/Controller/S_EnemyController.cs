@@ -44,6 +44,11 @@ public class S_EnemyController : MonoBehaviour
         _enemyHealthBarTransform.position = new (_enemyTransform.position.x, _enemyTransform.position.y + (_enemyTransform.localScale.y / 2));
     }
 
+    void OnDestroy()
+    {
+        S_EnemyAttributes._OnMovementSpeedUpdateEvent -= UpdateMovementSpeed;
+    }
+
     void UpdateMovementSpeed(S_Enemy p_enemy, int p_newMovementSpeed)
     {
         if (p_enemy != _enemy)

@@ -46,6 +46,16 @@ public class S_PlayerController : MonoBehaviour
         _OnActiveCapacityUnUseEvent += StopTryLaunchActiveCapacity;
     }
 
+    void OnDestroy()
+    {
+        S_PlayerAttributes._OnMovementSpeedUpdateEvent -= UpdateMovementSpeed;
+
+        _OnPlayerMoveInputEvent -= UpdateMovementDirection;
+        _OnPlayerRotateEvent -= UpdatePlayerOrientation;
+        _OnActiveCapacityUseEvent -= StartTryLaunchActiveCapacity;
+        _OnActiveCapacityUnUseEvent -= StopTryLaunchActiveCapacity;
+    }
+
     void Update()
     {
         Vector3 positionOffset = _movementSpeed * Time.deltaTime * _movementDirection;
