@@ -10,6 +10,7 @@ public class S_PassiveCapacityProperties : ScriptableObject
     {
         [Header(" Basics :")]
         public string _Name;
+        public Sprite _Sprite;
 
         [Header(" Upgrades :")]
         [Tooltip("Use that value as a getter, you can use '_PassiveCapacityProperties._UpgradesPerLevels.Count' to get the same result.")]
