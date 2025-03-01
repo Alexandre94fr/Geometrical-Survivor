@@ -86,14 +86,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeCapacityApparitionFactor: 0.25
+  _baseRepairCost: 10
+  _repairUseCostFactor: 1
+  _healthPointsHealFactorPerRepair: 0.1
+  _costPerHealthPointsHealed: 1
   _upgraderMenuUIGameObject: {fileID: 5653404377423915021}
   _firstButtonSelected: {fileID: 3335109691313348492}
   _capacitySellers:
   - {fileID: 6437554073115475438}
   - {fileID: 1652016581839038987}
   - {fileID: 4159470915262834044}
+  _healthBar: {fileID: 8882698476587223472}
+  _repairButton: {fileID: 3759563043015144260}
   _repairCostText: {fileID: 7136036294269953827}
-  _remainingCollectedNanomachines: {fileID: 9014513690488201424}
+  _remainingCollectedNanomachinesText: {fileID: 9014513690488201424}
   _activeCapacityProperties:
   - {fileID: 11400000, guid: add2d4933dc4eca49b077aa4b4ba8bd3, type: 2}
   - {fileID: 11400000, guid: 80412c9654d9f46408230171a34ce07e, type: 2}
@@ -669,7 +675,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -687,7 +693,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3072406955100049236}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 946089235796154132}
+        m_TargetAssemblyTypeName: S_UpgraderMenu, Assembly-CSharp
+        m_MethodName: OnRepairPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 946089235796154132}
+        m_TargetAssemblyTypeName: S_UpgraderMenu, Assembly-CSharp
+        m_MethodName: UpdateRepairButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3759563043015144260}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5328733815216093116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,3 +1688,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5966688176136084208, guid: 1d4ffacf5d5b72340accfe470606ba77, type: 3}
   m_PrefabInstance: {fileID: 8881462853497695713}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8882698476587223472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1376981202248785, guid: 1d4ffacf5d5b72340accfe470606ba77, type: 3}
+  m_PrefabInstance: {fileID: 8881462853497695713}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aea1633dd95d9f4eb1bc38ea80bec8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -111,7 +111,7 @@ public class S_Bar : MonoBehaviour
     }
 #endif
 
-    void UpdateBar(S_BarHandler.BarTypes p_barType, float p_newValue, float p_newMaxValue)
+    public void UpdateBar(S_BarHandler.BarTypes p_barType, float p_newValue, float p_newMaxValue)
     {
         if (p_barType != _barType)
             return;

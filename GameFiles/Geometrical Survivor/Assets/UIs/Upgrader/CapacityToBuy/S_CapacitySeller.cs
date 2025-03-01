@@ -31,7 +31,7 @@ public class S_CapacitySeller : MonoBehaviour
         _CapacityNameText.text = p_activeCapacityProperties._ActiveCapacityProperties._Name;
         _CapacityIconImage.sprite = p_activeCapacityProperties._ActiveCapacityProperties._Sprite;
 
-        _CapacityPropertiesText.text = GetUsefulProperties(p_activeCapacityProperties._ActiveCapacityProperties);
+        _CapacityPropertiesText.text = GetUsefulProperties(p_activeCapacityProperties._ActiveCapacityProperties, "_Price");
 
         _CapacityPriceText.text = $"Price : {p_activeCapacityProperties._ActiveCapacityProperties._Price}";
     }
@@ -44,24 +44,26 @@ public class S_CapacitySeller : MonoBehaviour
         S_PassiveCapacityProperties.GamePropertiesStruct atNextLevelPassiveCapacityPropertiesStruct =
             p_passiveCapacityPropertiesStruct._UpgradesPerLevels[p_passiveCapacityPropertiesStruct._CurrentLevel + 1];
 
-        _CapacityPropertiesText.text = GetUsefulProperties(atNextLevelPassiveCapacityPropertiesStruct);
+        _CapacityPropertiesText.text = GetUsefulProperties(atNextLevelPassiveCapacityPropertiesStruct, "_Price");
 
         _CapacityPriceText.text = $"Price : {atNextLevelPassiveCapacityPropertiesStruct._Price}";
     }
 
 
-    /// <returns> A string with all capacity properties that are not equal to 0, wrote in this way : AttributeName : AttributeValue </returns>
-    string GetUsefulProperties<T>(T propertiesStruct)
+    /// <returns> A string with all capacity properties that are not equal to 0, wrote in this way : AttributeName : AttributeValue
+    /// <para> <b> Beware ! </b> The '_Price' name attribute will never be returned. </para> </returns>
+    string GetUsefulProperties<T>(T p_properties, string p_ignoredPropertyName)
     {
         List<string> propertiesList = new();
 
         foreach (FieldInfo field in typeof(T).GetFields())
         {
-            object value = field.GetValue(propertiesStruct);
+            object value = field.GetValue(p_properties);
 
-            if (field.Name == "_Price")
+            if (field.Name == p_ignoredPropertyName)
                 continue;
 
+            // If the field.Name has an _ for first character then we delete it, otherwise to name is untouched
             string fieldName = field.Name.StartsWith("_") ? field.Name[1..] : field.Name;
 
             if (value is int intValue && intValue != 0)

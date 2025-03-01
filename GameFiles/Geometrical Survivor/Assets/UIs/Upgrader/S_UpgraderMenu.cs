@@ -9,6 +9,12 @@ public class S_UpgraderMenu : MonoBehaviour
     [Header(" Properties :")]
     [SerializeField] [Range(0, 1)] float _activeCapacityApparitionFactor = 0.25f;
 
+    [Space]
+    [SerializeField] int _baseRepairCost = 10;
+    [SerializeField] [Range(0, 2)] float _repairUseCostFactor = 1;
+    [SerializeField] [Range(0, 1)] float _healthPointsHealFactorPerRepair = 0.1f;
+    [SerializeField] int _costPerHealthPointsHealed = 1;
+
     [Header(" Internal references :")]
     [SerializeField] GameObject _upgraderMenuUIGameObject;
     [SerializeField] Button _firstButtonSelected;
@@ -17,16 +23,27 @@ public class S_UpgraderMenu : MonoBehaviour
     [SerializeField] List<S_CapacitySeller> _capacitySellers;
 
     [Space]
+    [SerializeField] S_Bar _healthBar;
+    [SerializeField] Button _repairButton;
     [SerializeField] TextMeshProUGUI _repairCostText;
 
     [Space]
-    [SerializeField] TextMeshProUGUI _remainingCollectedNanomachines;
+    [SerializeField] TextMeshProUGUI _remainingCollectedNanomachinesText;
 
     [Header(" External references :")]
     [SerializeField] List<S_ActiveCapacityProperties> _activeCapacityProperties;
     [SerializeField] List<S_PassiveCapacityProperties> _passiveCapacityProperties;
 
+    // Repair cost
+    int _currentRepairCost;
+    int _repairUseNumber = 0;
+
     // Player properties
+    S_PlayerAttributes _playerAttributes;
+
+    int _playerHealthPoints;
+    int _playerMaxHealthPoints;
+
     int _playerCurrentNanomachine;
     int _playerLevel;
 
@@ -35,16 +52,23 @@ public class S_UpgraderMenu : MonoBehaviour
 
     void Start()
     {
+        _playerAttributes = S_Player._Instance._PlayerAttributes;
+
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
             (_firstButtonSelected, nameof(_firstButtonSelected)),
             (_upgraderMenuUIGameObject, nameof(_upgraderMenuUIGameObject)),
             (_capacitySellers, nameof(_capacitySellers)),
+            (_healthBar, nameof(_healthBar)),
+            (_repairButton, nameof(_repairButton)),
             (_repairCostText, nameof(_repairCostText)),
-            (_remainingCollectedNanomachines, nameof(_remainingCollectedNanomachines)),
+            (_remainingCollectedNanomachinesText, nameof(_remainingCollectedNanomachinesText)),
 
             (_activeCapacityProperties, nameof(_activeCapacityProperties)),
             (_passiveCapacityProperties, nameof(_passiveCapacityProperties))
         )) return;
+
+        S_PlayerAttributes._OnHealthPointsUpdateEvent += OnPlayerHealthPointsUpdate;
+        S_PlayerAttributes._OnMaxHealthPointsUpdateEvent += OnPlayerMaxHealthPointsUpdate;
 
         S_PlayerAttributes._OnCollectedNanomachinesUpdateEvent += OnPlayerCurrentNanomachineUpdate;
         S_PlayerAttributes._OnTechnologicalLevelUpdateEvent += OnPlayerLevelUpdate;
@@ -53,11 +77,40 @@ public class S_UpgraderMenu : MonoBehaviour
         S_PlayerAttributes._OnEquippedPassiveCapacityUpdateEvent += OnPlayerPassiveCapacityPropertiesStructUpdate;
     }
 
+    void OnDestroy()
+    {
+        S_PlayerAttributes._OnHealthPointsUpdateEvent -= OnPlayerHealthPointsUpdate;
+        S_PlayerAttributes._OnMaxHealthPointsUpdateEvent -= OnPlayerMaxHealthPointsUpdate;
+
+        S_PlayerAttributes._OnCollectedNanomachinesUpdateEvent -= OnPlayerCurrentNanomachineUpdate;
+        S_PlayerAttributes._OnTechnologicalLevelUpdateEvent -= OnPlayerLevelUpdate;
+
+        S_PlayerAttributes._OnEquippedActiveCapacityUpdateEvent -= OnPlayerActiveCapacityPropertiesUpdate;
+        S_PlayerAttributes._OnEquippedPassiveCapacityUpdateEvent -= OnPlayerPassiveCapacityPropertiesStructUpdate;
+    }
+
     #region Player attributes update methods
+
+    void OnPlayerHealthPointsUpdate(int p_newPlayerHealthPoints)
+    {
+        _playerHealthPoints = p_newPlayerHealthPoints;
+
+        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints);
+    }
+
+    void OnPlayerMaxHealthPointsUpdate(int p_playerMaxHealthPoints)
+    {
+        _playerMaxHealthPoints = p_playerMaxHealthPoints;
+
+        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints);
+    }
 
     void OnPlayerCurrentNanomachineUpdate(int p_newCurrentNanomachine)
     {
         _playerCurrentNanomachine = p_newCurrentNanomachine;
+
+        UpdateRemainingNanomachineTextUI(p_newCurrentNanomachine);
+        UpdateRepairButton(_repairButton);
     }
 
     void OnPlayerLevelUpdate(int p_newLevel)
@@ -86,7 +139,14 @@ public class S_UpgraderMenu : MonoBehaviour
         Time.timeScale = 0;
         _upgraderMenuUIGameObject.SetActive(true);
 
+        // Updating UI's values
         UpdateCapacitySellers(GetRandomCapacities(_capacitySellers.Count));
+
+        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints);
+
+        UpdateRepairCostText();
+
+        UpdateRemainingNanomachineTextUI(_playerAttributes._CollectedNanomachines);
     }
 
     public void CloseUpgraderMenu()
@@ -193,6 +253,59 @@ public class S_UpgraderMenu : MonoBehaviour
             _capacitySellers[numberOfCapacitySellerUpdated].UpdateSoldCapacity(p_soldCapacities.passiveCapacity[i]);
             numberOfCapacitySellerUpdated++;
         }
+    }
+    #endregion
+
+    #region In upgrader menu methods
+
+    int GetRepairCost()
+    {
+        return (int)(_baseRepairCost + ((_repairUseCostFactor * _repairUseNumber) + (_playerMaxHealthPoints * _healthPointsHealFactorPerRepair * _costPerHealthPointsHealed)));
+    }
+
+    public void OnRepairPlayer()
+    {
+        int repairCost = GetRepairCost();
+
+        // Not enought nanomachines
+        if (_playerAttributes._CollectedNanomachines < repairCost) 
+            return;
+
+        // Applying the cost
+        _playerAttributes._CollectedNanomachines -= repairCost;
+        _repairUseNumber++;
+
+        // Healing the player
+        _playerAttributes._HealthPoints += (int)(_playerAttributes._MaxHealthPoints * _healthPointsHealFactorPerRepair);
+
+        // Update the UIs
+        UpdateRepairCostText();
+        UpdateRemainingNanomachineTextUI(_playerAttributes._CollectedNanomachines);
+    }
+
+    public void UpdateRepairButton(Button p_repairButton)
+    {
+        bool carRepair = true;
+
+        if (_playerAttributes._CollectedNanomachines < GetRepairCost())
+            carRepair = false;
+
+        p_repairButton.interactable = carRepair;
+    }
+
+    void UpdateRepairCostText()
+    {
+        _repairCostText.text = $"Cost : {GetRepairCost()}";
+    }
+
+    void UpdateRemainingNanomachineTextUI(int p_newValue)
+    {
+        _remainingCollectedNanomachinesText.text = $"Remaining Nanomachines : \n{p_newValue}";
+    }
+
+    void UpdateHealthBar(int p_newHealthPoints, int p_newMaxHealthPoints)
+    {
+        _healthBar.UpdateBar(S_BarHandler.BarTypes.Health, p_newHealthPoints, p_newMaxHealthPoints);
     }
     #endregion
 }
