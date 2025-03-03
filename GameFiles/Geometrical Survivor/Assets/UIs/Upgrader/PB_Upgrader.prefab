@@ -91,6 +91,7 @@ MonoBehaviour:
   _healthPointsHealFactorPerRepair: 0.1
   _costPerHealthPointsHealed: 1
   _upgraderMenuUIGameObject: {fileID: 5653404377423915021}
+  _closureConfirmationUIGameObject: {fileID: 1203165151946950003}
   _firstButtonSelected: {fileID: 8925821546993747944}
   _capacitySellers:
   - {fileID: 6437554073115475438}
@@ -1717,6 +1718,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2651d481e7fc945827a37975944f8f, type: 3}
+--- !u!1 &1203165151946950003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205842073706650315, guid: bd2651d481e7fc945827a37975944f8f, type: 3}
+  m_PrefabInstance: {fileID: 5092748919156776888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3986568140516493126 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8214062912545233150, guid: bd2651d481e7fc945827a37975944f8f, type: 3}

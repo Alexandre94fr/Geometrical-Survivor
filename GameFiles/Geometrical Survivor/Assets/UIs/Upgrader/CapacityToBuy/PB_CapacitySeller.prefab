@@ -710,7 +710,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4931457964512344295}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3775827166326518643}
+        m_TargetAssemblyTypeName: S_CapacitySeller, Assembly-CSharp
+        m_MethodName: OnTryBuyCapacity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6104735937888651781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,8 +1025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9214cdc389f726e4e8209649b1c10b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CapacityNameText: {fileID: 3522169682248288732}
-  _CapacityIconImage: {fileID: 761881987720815135}
-  _CapacityPropertiesText: {fileID: 7187586913566606546}
-  _CapacityPriceText: {fileID: 1453239479210860233}
-  _CapacityBuyButton: {fileID: 4861661116678410513}
+  _capacityNameText: {fileID: 3522169682248288732}
+  _capacityIconImage: {fileID: 761881987720815135}
+  _capacityPropertiesText: {fileID: 7187586913566606546}
+  _capacityPriceText: {fileID: 1453239479210860233}
+  _capacityBuyButton: {fileID: 4861661116678410513}

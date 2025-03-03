@@ -34,8 +34,8 @@ public class S_UpgraderClosureConfirmation : MonoBehaviour
 
     public void CloseCloserConfirmationUI()
     {
-        _ClosureConfirmationUIGameObject.SetActive(false);
-
         _firstButtonSelectedWhenClosed.Select();
+
+        _ClosureConfirmationUIGameObject.SetActive(false);
     }
 }

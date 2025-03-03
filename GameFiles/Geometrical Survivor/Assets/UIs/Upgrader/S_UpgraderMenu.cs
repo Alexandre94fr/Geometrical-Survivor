@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class S_UpgraderMenu : MonoBehaviour
 {
+    public static Action<S_ActiveCapacityProperties, S_CapacitySeller> _OnTryBuyActiveCapacityEvent;
+    public static Action<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct, S_CapacitySeller> _OnTryBuyPassiveCapacityEvent; 
+
+
     [Header(" Properties :")]
     [SerializeField] [Range(0, 1)] float _activeCapacityApparitionFactor = 0.25f;
 
@@ -17,6 +21,7 @@ public class S_UpgraderMenu : MonoBehaviour
 
     [Header(" Internal references :")]
     [SerializeField] GameObject _upgraderMenuUIGameObject;
+    [SerializeField] GameObject _closureConfirmationUIGameObject;
     [SerializeField] Button _firstButtonSelected;
 
     [Space]
@@ -62,16 +67,25 @@ public class S_UpgraderMenu : MonoBehaviour
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
             (_firstButtonSelected, nameof(_firstButtonSelected)),
             (_upgraderMenuUIGameObject, nameof(_upgraderMenuUIGameObject)),
+            (_closureConfirmationUIGameObject, nameof(_closureConfirmationUIGameObject)),
+
             (_capacitySellers, nameof(_capacitySellers)),
+
             (_repairHealthBar, nameof(_repairHealthBar)),
             (_repairButton, nameof(_repairButton)),
             (_repairCostText, nameof(_repairCostText)),
+
             (_remainingCollectedNanomachinesText, nameof(_remainingCollectedNanomachinesText)),
 
             (_activeCapacityProperties, nameof(_activeCapacityProperties)),
             (_passiveCapacityProperties, nameof(_passiveCapacityProperties))
         )) return;
 
+        // On capacity buy events
+        _OnTryBuyActiveCapacityEvent += OnTryBuyActiveCapacity;
+        _OnTryBuyPassiveCapacityEvent += OnTryBuyPassiveCapacity;
+
+        // Player's attributes update events
         S_PlayerAttributes._OnHealthPointsUpdateEvent += OnPlayerHealthPointsUpdate;
         S_PlayerAttributes._OnMaxHealthPointsUpdateEvent += OnPlayerMaxHealthPointsUpdate;
 
@@ -84,6 +98,11 @@ public class S_UpgraderMenu : MonoBehaviour
 
     void OnDestroy()
     {
+        // On capacity buy events
+        _OnTryBuyActiveCapacityEvent -= OnTryBuyActiveCapacity;
+        _OnTryBuyPassiveCapacityEvent -= OnTryBuyPassiveCapacity;
+
+        // Player's attributes update events
         S_PlayerAttributes._OnHealthPointsUpdateEvent -= OnPlayerHealthPointsUpdate;
         S_PlayerAttributes._OnMaxHealthPointsUpdateEvent -= OnPlayerMaxHealthPointsUpdate;
 
@@ -116,6 +135,8 @@ public class S_UpgraderMenu : MonoBehaviour
     void OnPlayerCurrentNanomachineUpdate(int p_newCurrentNanomachine)
     {
         _playerCurrentNanomachine = p_newCurrentNanomachine;
+
+        UpdateCapacityBuyButtonInteractability();
 
         UpdateRemainingNanomachineTextUI(p_newCurrentNanomachine);
         UpdateRepairButton(_repairButton);
@@ -164,6 +185,8 @@ public class S_UpgraderMenu : MonoBehaviour
         S_PauseMenuUI._OnCanPauseMenuBeShowedEvent?.Invoke(true);
 
         Time.timeScale = 1;
+
+        _closureConfirmationUIGameObject.SetActive(false);
         _upgraderMenuUIGameObject.SetActive(false);
     }
 
@@ -218,7 +241,7 @@ public class S_UpgraderMenu : MonoBehaviour
 
         for (int i = 0; i < p_numberOfCapacities; i++)
         {
-            // 25 % chance to pick a active capacity (check out _activeCapacityApparitionFactor for the real value)
+            // 25 % chance to pick an active capacity (check out _activeCapacityApparitionFactor for the real value)
             if (UnityEngine.Random.value > _activeCapacityApparitionFactor && sortedActiveCapacityProperties.Count > 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, sortedActiveCapacityProperties.Count);
@@ -237,7 +260,7 @@ public class S_UpgraderMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the <see cref="_capacitySellers"/> with the given capacities' attributes </summary>
+    /// Updates the <see cref = "_capacitySellers"/> with the given capacities' attributes </summary>
     void UpdateCapacitySellers((List<S_ActiveCapacityProperties> activeCapacity, List<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct> passiveCapacity) p_soldCapacities )
     {
         if (p_soldCapacities.activeCapacity.Count + p_soldCapacities.passiveCapacity.Count > _capacitySellers.Count)
@@ -254,19 +277,78 @@ public class S_UpgraderMenu : MonoBehaviour
 
         for (int i = p_soldCapacities.activeCapacity.Count - 1; i >= 0; i--)
         {
-            _capacitySellers[numberOfCapacitySellerUpdated].UpdateSoldCapacity(p_soldCapacities.activeCapacity[i]);
+            _capacitySellers[numberOfCapacitySellerUpdated].UpdateSoldCapacity(p_soldCapacities.activeCapacity[i], _playerCurrentNanomachine);
             numberOfCapacitySellerUpdated++;
         }
 
         for (int i = p_soldCapacities.passiveCapacity.Count - 1; i >= 0; i--)
         {
-            _capacitySellers[numberOfCapacitySellerUpdated].UpdateSoldCapacity(p_soldCapacities.passiveCapacity[i]);
+            _capacitySellers[numberOfCapacitySellerUpdated].UpdateSoldCapacity(p_soldCapacities.passiveCapacity[i], _playerCurrentNanomachine);
             numberOfCapacitySellerUpdated++;
         }
     }
     #endregion
 
     #region In upgrader menu methods
+
+    #region Capacity buy
+
+    void UpdateCapacityBuyButtonInteractability()
+    {
+        for (int i = 0; i < _capacitySellers.Count; i++)
+        {
+            _capacitySellers[i].UpdateBuyButtonInteractability(_playerCurrentNanomachine);
+        }
+    }
+
+    void OnTryBuyActiveCapacity(S_ActiveCapacityProperties p_activeCapacityProperties, S_CapacitySeller p_capacitySeller)
+    {
+        int price = p_activeCapacityProperties._ActiveCapacityProperties._Price;
+
+        if (DoesPlayerHaveEnoughNanomachines(price))
+        {
+            _playerAttributes._CollectedNanomachines -= price;
+
+            _playerAttributes._EquippedActiveCapacity = p_activeCapacityProperties;
+
+            p_capacitySeller.OnCapacityBought();
+            _firstButtonSelected.Select();
+        }
+    }
+
+    void OnTryBuyPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct, S_CapacitySeller p_capacitySeller)
+    {
+        bool hasAlreadyThePassiveCapacity = _playerAttributes.DoesPlayerAlreadyHaveThisPassiveCapacity(ref p_passiveCapacityPropertiesStruct);
+        int price;
+
+        // Explanation : If the player has NOT already the capacity, we want to take the level 1 price (first level)
+        if (hasAlreadyThePassiveCapacity)
+            price = p_passiveCapacityPropertiesStruct._UpgradesPerLevels[p_passiveCapacityPropertiesStruct._CurrentLevel + 1]._Price;
+        else
+            price = p_passiveCapacityPropertiesStruct._UpgradesPerLevels[p_passiveCapacityPropertiesStruct._CurrentLevel]._Price;
+
+        if (DoesPlayerHaveEnoughNanomachines(price))
+        {
+            _playerAttributes._CollectedNanomachines -= price;
+
+            if (hasAlreadyThePassiveCapacity)
+                _playerAttributes.TryLevelUpPassiveCapacity(ref p_passiveCapacityPropertiesStruct);
+            else
+                _playerAttributes.AddEquippedPassiveCapacity(ref p_passiveCapacityPropertiesStruct);
+
+            p_capacitySeller.OnCapacityBought();
+            _firstButtonSelected.Select();
+        }
+    }
+
+    bool DoesPlayerHaveEnoughNanomachines(int p_price)
+    {
+        if (_playerCurrentNanomachine >= p_price)
+            return true;
+
+        return false;
+    }
+    #endregion
 
     int GetRepairCost()
     {

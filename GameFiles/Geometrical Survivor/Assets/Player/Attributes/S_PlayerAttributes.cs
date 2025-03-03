@@ -145,8 +145,6 @@ public class S_PlayerAttributes : MonoBehaviour
         }
     }
 
-    #region Equipped passive capacity
-
     /// <summary>
     /// <b> BEWARE : </b> If you want to use .Add() or .Remove(), please use the 
     /// <see cref = "AddEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct)"/>, or 
@@ -168,31 +166,6 @@ public class S_PlayerAttributes : MonoBehaviour
             LaunchEquippedPassiveCapacityInvokes();
         }
     }
-
-    public void AddEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
-    {
-        _equippedPassiveCapacities.Add(p_passiveCapacityPropertiesStruct);
-
-        LaunchEquippedPassiveCapacityInvokes();
-    }
-
-    public void RemoveEquippedPassiveCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
-    {
-        _equippedPassiveCapacities.Remove(p_passiveCapacityPropertiesStruct);
-
-        LaunchEquippedPassiveCapacityInvokes();
-    }
-
-    void LaunchEquippedPassiveCapacityInvokes()
-    {
-        UpdatePlayerAttributes();
-
-        // TODO : Add HUD event (change icon / order)
-
-        _OnEquippedPassiveCapacityUpdateEvent?.Invoke(_equippedPassiveCapacities);
-    }
-    #endregion
-
     #endregion
 
     #endregion
@@ -405,7 +378,7 @@ public class S_PlayerAttributes : MonoBehaviour
 
         for (int i = 0; i < p_playerProperties._EquippedPassiveCapacities.Count; i++)
         {
-            AddEquippedPassiveCapacity(p_playerProperties._EquippedPassiveCapacities[i]._PassiveCapacityProperties);
+            AddEquippedPassiveCapacity(ref p_playerProperties._EquippedPassiveCapacities[i]._PassiveCapacityProperties);
         }
 
         // Experience
@@ -434,6 +407,14 @@ public class S_PlayerAttributes : MonoBehaviour
 
         #region Test cases
 
+        // Capacity
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct passiveCapacityPropertiesStruct = _EquippedPassiveCapacities[0];
+
+            TryLevelUpPassiveCapacity(ref passiveCapacityPropertiesStruct);
+        }
+
         // Nanomachine
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -448,18 +429,7 @@ public class S_PlayerAttributes : MonoBehaviour
         // Health
         if (Input.GetKeyDown(KeyCode.F))
         {
-            S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct equippedPassiveCapacities = _EquippedPassiveCapacities[0];
-
-            if (equippedPassiveCapacities._CurrentLevel < equippedPassiveCapacities._MaxLevel)
-            {
-                equippedPassiveCapacities._CurrentLevel++;
-
-                _EquippedPassiveCapacities[0] = equippedPassiveCapacities;
-
-                UpdatePlayerAttributes();
-            }
-
-            //_HealthPoints += 15;
+            _HealthPoints += 15;
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -490,6 +460,122 @@ public class S_PlayerAttributes : MonoBehaviour
         #endregion
     }
 
+    #region - Capacity - 
+
+    #region Active capacity
+
+
+    #endregion
+
+    #region Passive capacity
+
+    public void AddEquippedPassiveCapacity(ref S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
+    {
+        _equippedPassiveCapacities.Add(p_passiveCapacityPropertiesStruct);
+
+        LaunchEquippedPassiveCapacityInvokes();
+    }
+
+    public void RemoveEquippedPassiveCapacity(ref S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
+    {
+        _equippedPassiveCapacities.Remove(p_passiveCapacityPropertiesStruct);
+
+        LaunchEquippedPassiveCapacityInvokes();
+    }
+
+    void LaunchEquippedPassiveCapacityInvokes()
+    {
+        UpdatePlayerAttributes();
+
+        // TODO : Add HUD event (change icon / order)
+
+        _OnEquippedPassiveCapacityUpdateEvent?.Invoke(_equippedPassiveCapacities);
+    }
+
+    public void TryLevelUpPassiveCapacity(ref S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct, bool p_doesPrintsError = true)
+    {
+        int equippedPassiveCapacityIndex = TryGetPassiveCapacityIndex(ref p_passiveCapacityPropertiesStruct, false);
+
+        if (equippedPassiveCapacityIndex == -1)
+        {
+            if (p_doesPrintsError)
+            {
+                Debug.LogError($"ERROR ! The given '{p_passiveCapacityPropertiesStruct._Name}' is not equiped by the player.");
+            }
+
+            return;
+        }
+
+        // Explanation :
+        // In order to be able to modify the struct value,
+        // we are forced to completly replace the equipped passive capacity by a new one with new values
+
+        S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct equippedPassiveCapacity = _EquippedPassiveCapacities[equippedPassiveCapacityIndex];
+
+        // Security
+        if (equippedPassiveCapacity._CurrentLevel >= equippedPassiveCapacity._MaxLevel)
+        {
+            if (p_doesPrintsError)
+            {
+                Debug.LogError($"ERROR ! The passive capacity you tryied to level up '{p_passiveCapacityPropertiesStruct._Name}' is already maxed out.");
+            }
+
+            return;
+        }
+
+        equippedPassiveCapacity._CurrentLevel++;
+
+        _EquippedPassiveCapacities[equippedPassiveCapacityIndex] = equippedPassiveCapacity;
+
+        UpdatePlayerAttributes();
+    }
+
+    public bool DoesPlayerAlreadyHaveThisPassiveCapacity(ref S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
+    {
+        for (int i = 0; i < _EquippedPassiveCapacities.Count; i++)
+        {
+            if (_EquippedPassiveCapacities[i]._Name == p_passiveCapacityPropertiesStruct._Name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <returns> The passive capacity index in '<see cref="_EquippedPassiveCapacities"/>' but <b> ONLY </b> if the player has it.
+    /// 
+    /// <para> Otherwise it returns -1 and prints out a warning (if activated, he is by default). </para>
+    /// 
+    /// <para> <b> Note : </b> You can use the returned -1 to know if the capacity is equiped by the player,
+    /// just think to disable the warning by setting the parameter '<see cref="p_doesPrintWarning"/>' to false. </para> </returns>
+    public int TryGetPassiveCapacityIndex(ref S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct, bool p_doesPrintWarning = true)
+    {
+        for (int i = 0; i < _EquippedPassiveCapacities.Count; i++)
+        {
+            if (_EquippedPassiveCapacities[i]._Name == p_passiveCapacityPropertiesStruct._Name)
+            {
+                return i;
+            }
+        }
+
+        if (p_doesPrintWarning)
+        {
+            Debug.LogWarning(
+                $"WARNING ! The method '{nameof(TryGetPassiveCapacityIndex)}' has not found the given '{p_passiveCapacityPropertiesStruct._Name}' " +
+                $"passive capacity in the player capacities attributes. \n" +
+                "The method will return -1."
+            );
+        }
+
+        return -1;
+    }
+    #endregion
+
+    #endregion
+
+    #region - Nanomachine -
+
     /// <summary>
     /// Will add the given value to the '<see cref="_CollectedNanomachines"/>' and the '<see cref="_CollectedNanomachinesSinceLevelUp"/>'.
     /// 
@@ -502,6 +588,7 @@ public class S_PlayerAttributes : MonoBehaviour
         _CollectedNanomachines += p_nanomachines;
         _CollectedNanomachinesSinceLevelUp += p_nanomachines;
     }
+    #endregion
 
     void UpdatePlayerAttributes()
     {

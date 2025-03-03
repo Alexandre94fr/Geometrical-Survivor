@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
@@ -8,50 +7,82 @@ using UnityEngine.UI;
 public class S_CapacitySeller : MonoBehaviour
 {
     [Header(" Internal references :")]
-    [SerializeField] TextMeshProUGUI _CapacityNameText;
-    [SerializeField] Image _CapacityIconImage;
-    [SerializeField] TextMeshProUGUI _CapacityPropertiesText;
-    [SerializeField] TextMeshProUGUI _CapacityPriceText;
-    [SerializeField] Button _CapacityBuyButton;
+    [SerializeField] TextMeshProUGUI _capacityNameText;
+    [SerializeField] Image _capacityIconImage;
+    [SerializeField] TextMeshProUGUI _capacityPropertiesText;
+    [SerializeField] TextMeshProUGUI _capacityPriceText;
+    [SerializeField] Button _capacityBuyButton;
 
+    int _capacityPrice;
+
+    // Selling sold capacity
+    bool _isSoldCapacityActive;
+
+    S_ActiveCapacityProperties _soldActiveCapacityProperties;
+    S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct _soldPassiveCapacityPropertiesStruct;
 
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
-            (_CapacityNameText, nameof(_CapacityNameText)),
-            (_CapacityIconImage, nameof(_CapacityIconImage)),
-            (_CapacityPropertiesText, nameof(_CapacityPropertiesText)),
-            (_CapacityPriceText, nameof(_CapacityPriceText)),
-            (_CapacityBuyButton, nameof(_CapacityBuyButton))
+            (_capacityNameText, nameof(_capacityNameText)),
+            (_capacityIconImage, nameof(_capacityIconImage)),
+            (_capacityPropertiesText, nameof(_capacityPropertiesText)),
+            (_capacityPriceText, nameof(_capacityPriceText)),
+            (_capacityBuyButton, nameof(_capacityBuyButton))
         )) return;
     }
 
-    public void UpdateSoldCapacity(S_ActiveCapacityProperties p_activeCapacityProperties)
+    public void UpdateSoldCapacity(S_ActiveCapacityProperties p_activeCapacityProperties, int p_nanomachineCollectedByPlayer)
     {
-        _CapacityNameText.text = p_activeCapacityProperties._ActiveCapacityProperties._Name;
-        _CapacityIconImage.sprite = p_activeCapacityProperties._ActiveCapacityProperties._Sprite;
+        // Changing UI's values to the given active capacity
+        _capacityNameText.text = p_activeCapacityProperties._ActiveCapacityProperties._Name;
+        _capacityIconImage.sprite = p_activeCapacityProperties._ActiveCapacityProperties._Sprite;
 
-        _CapacityPropertiesText.text = GetUsefulProperties(p_activeCapacityProperties._ActiveCapacityProperties, "_Price");
+        _capacityPropertiesText.text = GetUsefulProperties(p_activeCapacityProperties._ActiveCapacityProperties, "_Price");
 
-        _CapacityPriceText.text = $"Price : {p_activeCapacityProperties._ActiveCapacityProperties._Price}";
+        _capacityPrice = p_activeCapacityProperties._ActiveCapacityProperties._Price;
+
+        _capacityPriceText.text = $"Price : {_capacityPrice}";
+
+        // Handling buy button interactability
+        _capacityBuyButton.interactable = true;
+
+        if (_capacityPrice > p_nanomachineCollectedByPlayer)
+            _capacityBuyButton.interactable = false;
+
+        // Saving which type of capacity we sells
+        _soldActiveCapacityProperties = p_activeCapacityProperties;
+        _isSoldCapacityActive = true;
     }
 
-    public void UpdateSoldCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct)
+    public void UpdateSoldCapacity(S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct p_passiveCapacityPropertiesStruct, int p_nanomachineCollectedByPlayer)
     {
-        _CapacityNameText.text = p_passiveCapacityPropertiesStruct._Name;
-        _CapacityIconImage.sprite = p_passiveCapacityPropertiesStruct._Sprite;
+        // Changing UI's values to the given passive capacity
+        _capacityNameText.text = p_passiveCapacityPropertiesStruct._Name;
+        _capacityIconImage.sprite = p_passiveCapacityPropertiesStruct._Sprite;
 
         S_PassiveCapacityProperties.GamePropertiesStruct atNextLevelPassiveCapacityPropertiesStruct =
             p_passiveCapacityPropertiesStruct._UpgradesPerLevels[p_passiveCapacityPropertiesStruct._CurrentLevel + 1];
 
-        _CapacityPropertiesText.text = GetUsefulProperties(atNextLevelPassiveCapacityPropertiesStruct, "_Price");
+        _capacityPropertiesText.text = GetUsefulProperties(atNextLevelPassiveCapacityPropertiesStruct, "_Price");
 
-        _CapacityPriceText.text = $"Price : {atNextLevelPassiveCapacityPropertiesStruct._Price}";
+        _capacityPrice = atNextLevelPassiveCapacityPropertiesStruct._Price;
+
+        _capacityPriceText.text = $"Price : {_capacityPrice}";
+
+        // Handling buy button interactability
+        _capacityBuyButton.interactable = true;
+
+        if (_capacityPrice > p_nanomachineCollectedByPlayer)
+            _capacityBuyButton.interactable = false;
+
+        // Saving which type of capacity we sells
+        _soldPassiveCapacityPropertiesStruct = p_passiveCapacityPropertiesStruct;
+        _isSoldCapacityActive = false;
     }
 
 
-    /// <returns> A string with all capacity properties that are not equal to 0, wrote in this way : AttributeName : AttributeValue
-    /// <para> <b> Beware ! </b> The '_Price' name attribute will never be returned. </para> </returns>
+    /// <returns> A string with all capacity properties that are not equal to 0, wrote in this way : - AttributeName : AttributeValue </returns>
     string GetUsefulProperties<T>(T p_properties, string p_ignoredPropertyName)
     {
         List<string> propertiesList = new();
@@ -76,5 +107,29 @@ public class S_CapacitySeller : MonoBehaviour
         }
 
         return "- " + string.Join("\n- ", propertiesList);
+    }
+
+    public void OnTryBuyCapacity()
+    {
+        if (_isSoldCapacityActive)
+            S_UpgraderMenu._OnTryBuyActiveCapacityEvent?.Invoke(_soldActiveCapacityProperties, this);
+        else
+            S_UpgraderMenu._OnTryBuyPassiveCapacityEvent?.Invoke(_soldPassiveCapacityPropertiesStruct, this);
+    }
+
+    public void UpdateBuyButtonInteractability(int p_nanomachineCollectedByPlayer)
+    {
+        if (_capacityBuyButton.interactable == false)
+            return;
+
+        _capacityBuyButton.interactable = true;
+
+        if (_capacityPrice > p_nanomachineCollectedByPlayer)
+            _capacityBuyButton.interactable = false;
+    }
+
+    public void OnCapacityBought()
+    {
+        _capacityBuyButton.interactable = false;
     }
 }
