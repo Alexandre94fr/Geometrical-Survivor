@@ -23,7 +23,7 @@ public class S_UpgraderMenu : MonoBehaviour
     [SerializeField] List<S_CapacitySeller> _capacitySellers;
 
     [Space]
-    [SerializeField] S_Bar _healthBar;
+    [SerializeField] S_RepairHealthBar _repairHealthBar;
     [SerializeField] Button _repairButton;
     [SerializeField] TextMeshProUGUI _repairCostText;
 
@@ -38,17 +38,22 @@ public class S_UpgraderMenu : MonoBehaviour
     int _currentRepairCost;
     int _repairUseNumber = 0;
 
+    int _healthPointsAfterHeal { 
+        get { return (int)(_playerMaxHealthPoints * _healthPointsHealFactorPerRepair); } 
+    }
+
     // Player properties
     S_PlayerAttributes _playerAttributes;
 
     int _playerHealthPoints;
     int _playerMaxHealthPoints;
 
+    S_ActiveCapacityProperties _playerActiveCapacityProperties;
+    List<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct> _playerPassiveCapacityPropertiesStruct;
+
     int _playerCurrentNanomachine;
     int _playerLevel;
 
-    S_ActiveCapacityProperties _playerActiveCapacityProperties;
-    List<S_PassiveCapacityProperties.PassiveCapacityPropertiesStruct> _playerPassiveCapacityPropertiesStruct;
 
     void Start()
     {
@@ -58,7 +63,7 @@ public class S_UpgraderMenu : MonoBehaviour
             (_firstButtonSelected, nameof(_firstButtonSelected)),
             (_upgraderMenuUIGameObject, nameof(_upgraderMenuUIGameObject)),
             (_capacitySellers, nameof(_capacitySellers)),
-            (_healthBar, nameof(_healthBar)),
+            (_repairHealthBar, nameof(_repairHealthBar)),
             (_repairButton, nameof(_repairButton)),
             (_repairCostText, nameof(_repairCostText)),
             (_remainingCollectedNanomachinesText, nameof(_remainingCollectedNanomachinesText)),
@@ -70,11 +75,11 @@ public class S_UpgraderMenu : MonoBehaviour
         S_PlayerAttributes._OnHealthPointsUpdateEvent += OnPlayerHealthPointsUpdate;
         S_PlayerAttributes._OnMaxHealthPointsUpdateEvent += OnPlayerMaxHealthPointsUpdate;
 
-        S_PlayerAttributes._OnCollectedNanomachinesUpdateEvent += OnPlayerCurrentNanomachineUpdate;
-        S_PlayerAttributes._OnTechnologicalLevelUpdateEvent += OnPlayerLevelUpdate;
-
         S_PlayerAttributes._OnEquippedActiveCapacityUpdateEvent += OnPlayerActiveCapacityPropertiesUpdate;
         S_PlayerAttributes._OnEquippedPassiveCapacityUpdateEvent += OnPlayerPassiveCapacityPropertiesStructUpdate;
+
+        S_PlayerAttributes._OnCollectedNanomachinesUpdateEvent += OnPlayerCurrentNanomachineUpdate;
+        S_PlayerAttributes._OnTechnologicalLevelUpdateEvent += OnPlayerLevelUpdate;
     }
 
     void OnDestroy()
@@ -82,11 +87,11 @@ public class S_UpgraderMenu : MonoBehaviour
         S_PlayerAttributes._OnHealthPointsUpdateEvent -= OnPlayerHealthPointsUpdate;
         S_PlayerAttributes._OnMaxHealthPointsUpdateEvent -= OnPlayerMaxHealthPointsUpdate;
 
-        S_PlayerAttributes._OnCollectedNanomachinesUpdateEvent -= OnPlayerCurrentNanomachineUpdate;
-        S_PlayerAttributes._OnTechnologicalLevelUpdateEvent -= OnPlayerLevelUpdate;
-
         S_PlayerAttributes._OnEquippedActiveCapacityUpdateEvent -= OnPlayerActiveCapacityPropertiesUpdate;
         S_PlayerAttributes._OnEquippedPassiveCapacityUpdateEvent -= OnPlayerPassiveCapacityPropertiesStructUpdate;
+
+        S_PlayerAttributes._OnCollectedNanomachinesUpdateEvent -= OnPlayerCurrentNanomachineUpdate;
+        S_PlayerAttributes._OnTechnologicalLevelUpdateEvent -= OnPlayerLevelUpdate;
     }
 
     #region Player attributes update methods
@@ -95,14 +100,17 @@ public class S_UpgraderMenu : MonoBehaviour
     {
         _playerHealthPoints = p_newPlayerHealthPoints;
 
-        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints);
+        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints, _healthPointsAfterHeal, _playerMaxHealthPoints);
     }
 
     void OnPlayerMaxHealthPointsUpdate(int p_playerMaxHealthPoints)
     {
         _playerMaxHealthPoints = p_playerMaxHealthPoints;
 
-        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints);
+        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints, _healthPointsAfterHeal, _playerMaxHealthPoints);
+
+        // If the player take a passive capacity that changes the max health points, we need to update the repair button
+        UpdateRepairButton(_repairButton);
     }
 
     void OnPlayerCurrentNanomachineUpdate(int p_newCurrentNanomachine)
@@ -142,7 +150,7 @@ public class S_UpgraderMenu : MonoBehaviour
         // Updating UI's values
         UpdateCapacitySellers(GetRandomCapacities(_capacitySellers.Count));
 
-        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints);
+        UpdateHealthBar(_playerHealthPoints, _playerMaxHealthPoints, _healthPointsAfterHeal, _playerMaxHealthPoints);
 
         UpdateRepairCostText();
 
@@ -208,7 +216,7 @@ public class S_UpgraderMenu : MonoBehaviour
 
         for (int i = 0; i < p_numberOfCapacities; i++)
         {
-            // 50 % chance to pick a active capacity
+            // 25 % chance to pick a active capacity (check out _activeCapacityApparitionFactor for the real value)
             if (UnityEngine.Random.value > _activeCapacityApparitionFactor && sortedActiveCapacityProperties.Count > 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, sortedActiveCapacityProperties.Count);
@@ -287,7 +295,7 @@ public class S_UpgraderMenu : MonoBehaviour
     {
         bool carRepair = true;
 
-        if (_playerAttributes._CollectedNanomachines < GetRepairCost())
+        if (_playerAttributes._CollectedNanomachines < GetRepairCost() || _playerAttributes._HealthPoints >= _playerAttributes._MaxHealthPoints)
             carRepair = false;
 
         p_repairButton.interactable = carRepair;
@@ -303,9 +311,9 @@ public class S_UpgraderMenu : MonoBehaviour
         _remainingCollectedNanomachinesText.text = $"Remaining Nanomachines : \n{p_newValue}";
     }
 
-    void UpdateHealthBar(int p_newHealthPoints, int p_newMaxHealthPoints)
+    void UpdateHealthBar(int p_newHealthPoints, int p_newMaxHealthPoints, int p_newPreviewValue, int p_newPreviewMaxValue)
     {
-        _healthBar.UpdateBar(S_BarHandler.BarTypes.Health, p_newHealthPoints, p_newMaxHealthPoints);
+        _repairHealthBar.UpdateBar(p_newHealthPoints, p_newMaxHealthPoints, p_newPreviewValue, p_newPreviewMaxValue);
     }
     #endregion
 }
