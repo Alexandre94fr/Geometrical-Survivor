@@ -147,6 +147,8 @@ public class S_UpgraderMenu : MonoBehaviour
         Time.timeScale = 0;
         _upgraderMenuUIGameObject.SetActive(true);
 
+        _firstButtonSelected.Select();
+
         // Updating UI's values
         UpdateCapacitySellers(GetRandomCapacities(_capacitySellers.Count));
 
@@ -296,8 +298,23 @@ public class S_UpgraderMenu : MonoBehaviour
         bool carRepair = true;
 
         if (_playerAttributes._CollectedNanomachines < GetRepairCost() || _playerAttributes._HealthPoints >= _playerAttributes._MaxHealthPoints)
+        {
             carRepair = false;
 
+            // Security
+            if (p_repairButton == _firstButtonSelected)
+            {
+                Debug.LogError(
+                    $"ERROR ! Beware the repair button has been set as not interactable, that means this button cannot be selected. \n" +
+                    "This is an error because a player who is using a controller, will not be able a select new buttons in the upgrader menu, " +
+                    "which will result to the player being stuck in the menu. \n" +
+                    $"You should set '{nameof(_firstButtonSelected)}' to another button.\n"
+                );
+            }
+
+            _firstButtonSelected.Select();
+        }
+            
         p_repairButton.interactable = carRepair;
     }
 
