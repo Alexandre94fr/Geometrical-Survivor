@@ -1,17 +1,17 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class S_PauseMenuUI : MonoBehaviour
 {
     public static Action _OnPlayerPauseEvent;
+    public static Action<bool> _OnCanPauseMenuBeShowedEvent;
 
     [Header(" Internal references :")]
     [SerializeField] GameObject _pauseMenuUIGameObject;
     [SerializeField] Button _firstButtonSelected;
 
-    bool _isPlayerPauseMenuVisible;
+    bool _canPauseMenuBeShowed;
 
     void Start()
     {
@@ -20,24 +20,23 @@ public class S_PauseMenuUI : MonoBehaviour
             (_firstButtonSelected, nameof(_firstButtonSelected))
         )) return;
 
-        S_DeathMenu._OnPlayerDeathMenuVisibiltyChangeEvent += UpdatePlayerPauseMenuVisibility;
         _OnPlayerPauseEvent += ChangePlayerPauseMenuVisibility;
+        _OnCanPauseMenuBeShowedEvent += UpdateCanPauseMenuBeShowed;
     }
 
     void OnDestroy()
     {
-        S_DeathMenu._OnPlayerDeathMenuVisibiltyChangeEvent -= UpdatePlayerPauseMenuVisibility;
         _OnPlayerPauseEvent -= ChangePlayerPauseMenuVisibility;
     }
 
-    void UpdatePlayerPauseMenuVisibility(bool p_newVisibility)
+    void UpdateCanPauseMenuBeShowed(bool p_canPauseMenuBeShowed)
     {
-        _isPlayerPauseMenuVisible = p_newVisibility;
+        _canPauseMenuBeShowed = p_canPauseMenuBeShowed;
     }
 
     public void ChangePlayerPauseMenuVisibility()
     {
-        if (!_pauseMenuUIGameObject.activeSelf && !_isPlayerPauseMenuVisible)
+        if (!_pauseMenuUIGameObject.activeSelf && _canPauseMenuBeShowed)
         {
             _pauseMenuUIGameObject.SetActive(true);
             Time.timeScale = 0f;

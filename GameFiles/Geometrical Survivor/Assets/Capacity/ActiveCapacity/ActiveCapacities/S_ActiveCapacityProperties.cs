@@ -13,6 +13,7 @@ public class S_ActiveCapacityProperties : ScriptableObject
 
         [Header(" Basic :")]
         public string _Name;
+        public Sprite _Sprite;
 
         [Space]
         public float _ArmingTime;
