@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Obstacle
+  - Nanomachine
   layers:
   - Default
   - TransparentFX
@@ -11,12 +14,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Obstacle
+  - PlayerProjectile
+  - EnemyProjectile
+  - Nanomachine
   - 
   - 
   - 
