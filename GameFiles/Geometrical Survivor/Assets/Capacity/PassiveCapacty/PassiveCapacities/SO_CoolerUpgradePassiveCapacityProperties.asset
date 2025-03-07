@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PassiveCapacityProperties:
     _Name: Cooler upgrade
+    _Sprite: {fileID: 0}
     _MaxLevel: 5
     _CurrentLevel: 1
     _UpgradesPerLevels:
@@ -73,14 +74,14 @@ MonoBehaviour:
       _AttackKnockback: 0
       _SelfStunningTimeWhenSucceed: 0
       _SelfStunningTimeWhenFailed: 0
-    - _Price: 100
+    - _Price: 80
       _MovementSpeed: 0
       _MaxHealthPoints: 0
       _NanomachineCollectionRadius: 0
       _Damage: 0
       _AttackReach: 0
       _ArmingTime: 0
-      _CooldownTime: -0.5
+      _CooldownTime: -0.45
       _InvulnerabilityTime: 0
       _AttackLifetime: 0
       _StunningTime: 0

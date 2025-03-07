@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c5db884baa5a9c49a67cf8e5d1718df, type: 3}
-  m_Name: SO_EnemyProperties
+  m_Name: SO_TriangleEnemyProperties
   m_EditorClassIdentifier: 
   _EnemyProperties:
-    _Name: Enemy
-    _Sprite: {fileID: 21300000, guid: b81cb59ee8ff663438a39b26f0cdada7, type: 3}
-    _MovementSpeed: 3
+    _Name: Triangle enemy
+    _Sprite: {fileID: 21300000, guid: 279ac805c9d8d474c86a31de3a4bfdbc, type: 3}
+    _SpriteColor: {r: 1, g: 1, b: 0, a: 1}
+    _Prefab: {fileID: 8971969365887466122, guid: fa6cddd9bb5e9e9499ffc5727c84b321, type: 3}
+    _MovementSpeed: 6
     _MaxHealthPoints: 10
     _AttackDamage: 5
     _AttackCooldownTime: 1

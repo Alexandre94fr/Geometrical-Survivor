@@ -8,10 +8,7 @@ public class S_EnemyController : MonoBehaviour
     [SerializeField] S_Enemy _enemy;
     [SerializeField] Transform _enemyHealthBarTransform;
 
-    [Space]
-    [SerializeField] Transform _targetTransform; 
-    // Because there is only one target possible (the player) we don't need to get it at runtime
-
+    Transform _targetTransform; 
 
     Transform _enemyTransform;
     int _movementSpeed;
@@ -21,6 +18,8 @@ public class S_EnemyController : MonoBehaviour
 
     void Start()
     {
+        _targetTransform = S_Player._Instance.transform;
+
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
             (_enemy, nameof(_enemy)),
             (_enemyHealthBarTransform, nameof(_enemyHealthBarTransform)),

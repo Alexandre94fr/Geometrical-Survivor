@@ -1,13 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class S_Enemy : MonoBehaviour
 {
-    [Header(" Enemy's statistics :")]
-    public S_EnemyProperties _EnemyStatistics;
+    [Header(" Properties :")]
+    public S_EnemyProperties _EnemyProperties;
 
+    [Header(" Internal references :")]
+    public S_EnemyAttributes _EnemyAttributes;
+    public S_EnemyController _EnemyController;
 
     SpriteRenderer _spriteRenderer;
 
@@ -17,10 +19,14 @@ public class S_Enemy : MonoBehaviour
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
-            (_EnemyStatistics, nameof(_EnemyStatistics))
+            (_EnemyProperties, nameof(_EnemyProperties)),
+
+            (_EnemyAttributes, nameof(_EnemyAttributes)),
+            (_EnemyController, nameof(_EnemyController))
         )) return;
 
-        S_EnemyAttributes._OnEnemySpriteUpdateEvent += UpdateSprite;
+        S_EnemyAttributes._OnEnemySpriteUpdateEvent += OnSpriteUpdate;
+        S_EnemyAttributes._OnEnemySpriteColorUpdateEvent += OnSpriteColorUpdate;
         S_EnemyAttributes._OnHealthPointsUpdateEvent += OnHealthUpdate;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -28,7 +34,8 @@ public class S_Enemy : MonoBehaviour
 
     void OnDestroy()
     {
-        S_EnemyAttributes._OnEnemySpriteUpdateEvent -= UpdateSprite;
+        S_EnemyAttributes._OnEnemySpriteUpdateEvent -= OnSpriteUpdate;
+        S_EnemyAttributes._OnEnemySpriteColorUpdateEvent -= OnSpriteColorUpdate;
         S_EnemyAttributes._OnHealthPointsUpdateEvent -= OnHealthUpdate;
     }
 
@@ -42,9 +49,9 @@ public class S_Enemy : MonoBehaviour
                 return;
             
             StartCoroutine(StartAttackLoop(
-                _EnemyStatistics._EnemyProperties._AttackCooldownTime,
+                _EnemyProperties._EnemyProperties._AttackCooldownTime,
                 p_collision2D.gameObject.GetComponentInChildren<S_PlayerAttributes>(),
-                _EnemyStatistics._EnemyProperties._AttackDamage
+                _EnemyProperties._EnemyProperties._AttackDamage
             ));
         }
     }
@@ -54,13 +61,41 @@ public class S_Enemy : MonoBehaviour
         _isCollidingPlayer = false;
     }
 
+    #region Enemy update methods
+
+    void OnSpriteUpdate(S_Enemy p_enemy, Sprite p_newSprite)
+    {
+        if (p_enemy != this)
+            return;
+
+        _spriteRenderer.sprite = p_newSprite;
+    }
+
+    void OnSpriteColorUpdate(S_Enemy p_enemy, Color p_newSpriteColor)
+    {
+        if (p_enemy != this)
+            return;
+
+        _spriteRenderer.color = p_newSpriteColor;
+    }
+
+    void OnHealthUpdate(S_Enemy p_enemy, int p_healthPoint)
+    {
+        if (p_enemy != this)
+            return;
+
+        if (p_healthPoint <= 0)
+            OnDeath();
+    }
+    #endregion
+
     IEnumerator StartAttackLoop(float p_attackCooldownTime, S_PlayerAttributes p_playerAttributes, int p_attackDamage)
     {
         while (_isCollidingPlayer)
         {
             if (_canAttack)
             {
-                StartCoroutine(LaunchAttackCooldown(_EnemyStatistics._EnemyProperties._AttackCooldownTime));
+                StartCoroutine(LaunchAttackCooldown(_EnemyProperties._EnemyProperties._AttackCooldownTime));
 
                 Attack(p_playerAttributes, p_attackDamage);
             }
@@ -83,27 +118,10 @@ public class S_Enemy : MonoBehaviour
         p_playerAttributes._HealthPoints -= p_attackDamage;
     }
 
-    void UpdateSprite(S_Enemy p_enemy, Sprite p_newSprite)
-    {
-        if (p_enemy != this)
-            return;
-
-        _spriteRenderer.sprite = p_newSprite;
-    }
-
-    void OnHealthUpdate(S_Enemy p_enemy, int p_healthPoint)
-    {
-        if (p_enemy != this)
-            return;
-
-        if (p_healthPoint <= 0)
-            OnDeath();
-    }
-
     void OnDeath()
     {
-        S_NanomachinesManager._Instance.InstantiateNanomachineObject(transform.position, _EnemyStatistics._EnemyProperties._NanomachinesDroppedWhenKilled);
+        S_NanomachinesManager._Instance.InstantiateNanomachineObject(transform.position, _EnemyProperties._EnemyProperties._NanomachinesDroppedWhenKilled);
 
-        Destroy(gameObject.transform.parent.gameObject);
+        S_EnemySpawner._OnDespawnEnemyEvent?.Invoke(gameObject);
     }
 }
