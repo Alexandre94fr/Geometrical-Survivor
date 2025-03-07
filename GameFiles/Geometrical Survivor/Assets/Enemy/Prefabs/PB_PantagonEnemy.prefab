@@ -46,7 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemy: {fileID: 8904169376325953388}
   _enemyHealthBarTransform: {fileID: 2034167046555276360}
-  _targetTransform: {fileID: 0}
 --- !u!1 &1425392609493821414
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +222,7 @@ MonoBehaviour:
   _enemy: {fileID: 8904169376325953388}
   _name: 
   _sprite: {fileID: 0}
+  _spriteColor: {r: 0, g: 0, b: 0, a: 0}
   _movementSpeed: 0
   _maxHealthPoints: 0
   _healthPoints: 0
@@ -663,7 +663,7 @@ GameObject:
   m_Component:
   - component: {fileID: 647588797054618683}
   m_Layer: 0
-  m_Name: PB_Enemy
+  m_Name: PB_PantagonEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -696,7 +696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8374585821130373731}
   - component: {fileID: 3620206709329507627}
-  - component: {fileID: 1864031047621274115}
+  - component: {fileID: 5012593008419478474}
   - component: {fileID: 5714877052190724523}
   - component: {fileID: 8904169376325953388}
   m_Layer: 7
@@ -715,8 +715,8 @@ Transform:
   m_GameObject: {fileID: 9159089406211544005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7491267945344279956}
@@ -764,8 +764,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b81cb59ee8ff663438a39b26f0cdada7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 8dd3022a73947e64386d99f863022d08, type: 3}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -775,8 +775,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1864031047621274115
-BoxCollider2D:
+--- !u!60 &5012593008419478474
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -817,9 +817,14 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.5, y: 0.15}
+      - {x: 0, y: 0.5}
+      - {x: -0.5, y: 0.15}
+      - {x: -0.35, y: -0.5}
+      - {x: 0.35, y: -0.5}
+  m_UseDelaunayMesh: 0
 --- !u!50 &5714877052190724523
 Rigidbody2D:
   serializedVersion: 4
@@ -859,4 +864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3422cdac194b547bffe57e06d5cc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _EnemyStatistics: {fileID: 11400000, guid: c5d6569257529ff488a2531dfa50b587, type: 2}
+  _EnemyProperties: {fileID: 11400000, guid: c5d6569257529ff488a2531dfa50b587, type: 2}
+  _EnemyAttributes: {fileID: 1418084533416926528}
+  _EnemyController: {fileID: 1812434696887308819}
