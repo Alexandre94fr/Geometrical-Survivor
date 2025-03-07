@@ -9,6 +9,7 @@ public class S_EnemyAttributes : MonoBehaviour
     // Basic
     public static event Action<S_Enemy, string> _OnEnemyNameUpdateEvent;
     public static event Action<S_Enemy, Sprite> _OnEnemySpriteUpdateEvent;
+    public static event Action<S_Enemy, Color> _OnEnemySpriteColorUpdateEvent;
 
     // Movement
     public static event Action<S_Enemy, int> _OnMovementSpeedUpdateEvent;
@@ -59,6 +60,23 @@ public class S_EnemyAttributes : MonoBehaviour
             _sprite = value;
 
             _OnEnemySpriteUpdateEvent?.Invoke(_enemy, _sprite);
+        }
+    }
+
+    public Color _SpriteColor
+    {
+        get { return _spriteColor; }
+        set
+        {
+            if (value == null)
+            {
+                Debug.LogError($"ERROR ! Someone tryied to set '{nameof(_SpriteColor)}' to null. The variable's value has NOT been changed.");
+                return;
+            }
+
+            _spriteColor = value;
+
+            _OnEnemySpriteColorUpdateEvent?.Invoke(_enemy, _spriteColor);
         }
     }
     #endregion
@@ -198,6 +216,7 @@ public class S_EnemyAttributes : MonoBehaviour
     [Header(" Basic :")]
     [ReadOnlyInInspector] [SerializeField] string _name;
     [ReadOnlyInInspector] [SerializeField] Sprite _sprite;
+    [ReadOnlyInInspector] [SerializeField] Color _spriteColor;
 
     [Header(" Movement :")]
     [ReadOnlyInInspector] [SerializeField] int _movementSpeed;
@@ -217,17 +236,19 @@ public class S_EnemyAttributes : MonoBehaviour
     void Start()
     {
         if (!S_VariablesChecker.AreVariablesCorrectlySetted(gameObject.name, null,
-            (_enemy, nameof(_enemy))
+            (_enemy, nameof(_enemy)),
+            (_enemy._EnemyProperties, nameof(_enemy._EnemyProperties))
         )) return;
 
-        InitializingPlayerAttributes(_enemy._EnemyStatistics);
+        InitializingEnemyAttributes(_enemy._EnemyProperties);
     }
 
-    void InitializingPlayerAttributes(S_EnemyProperties p_enemyProperties)
+    void InitializingEnemyAttributes(S_EnemyProperties p_enemyProperties)
     {
         // Basic
         _Name = p_enemyProperties._EnemyProperties._Name;
         _Sprite = p_enemyProperties._EnemyProperties._Sprite;
+        _SpriteColor = p_enemyProperties._EnemyProperties._SpriteColor;
 
         // Movement
         _MovementSpeed = p_enemyProperties._EnemyProperties._MovementSpeed;
